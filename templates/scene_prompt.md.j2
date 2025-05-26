@@ -1,0 +1,32 @@
+{{ system_reference }}
+
+## Scene {{ scene.scene_number }}: {{ scene.scene_title }}
+
+**Type**: {{ scene.type }}
+**Lead-In**: {{ scene.lead_in }}
+**Lead-Out**: {{ scene.lead_out }}
+
+### Opening Hook
+{{ scene.opening_hook }}
+
+### Scene Objectives
+{% for obj in scene.objectives %}
+- {{ obj }}
+{% endfor %}
+
+### Clues (Investigative Abilities)
+{% for ability, clue in scene.clues.items() %}
+- **{{ ability }}**: {{ clue }}
+{% endfor %}
+
+### Challenges (General Abilities)
+{% for challenge in scene.general_challenges %}
+- **{{ challenge.ability }} (TN {{ challenge.target }})**: {{ challenge.challenge }}
+{% endfor %}
+
+### Adversaries
+{{ scene.adversaries or "None listed." }}
+
+### Options & Outcomes
+{{ scene.options_outcomes }}
+

@@ -1,0 +1,17 @@
+tone: "Dark urban sword & sorcery. Corruption, forbidden magic, and personal ambition."
+setting: "Eversink, a flooded city ruled by commerce and religion. Sorcery is illegal."
+factions:
+  - Church of Denari
+  - Mercanti Guilds
+  - Ancient Nobility
+  - Small Gods
+player_characters:
+  - Raina, former inquisitor
+  - Milo, demon-haunted thief
+  - Zevra, serpent-blooded sorcerer
+rules:
+  - Investigative Abilities always succeed. Never rolled.
+  - General Abilities use 1d6 + spend vs. TN 4–8.
+  - Sorcery is powerful but corrupting.
+  - No generic monsters or random fights.
+
