@@ -3,6 +3,15 @@ import sys
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from src.llm_utils import send_prompt_to_openrouter
+from src.pdf_to_text import pdf_2_text
+
+def prompt_path(adventure_path: str):
+    input_name = Path(adventure_path).stem
+    return f"{input_name}_summary_prompt"
+
+def response_path(adventure_path: str):
+    work_dir = Path("work")
+    return work_dir / f"{prompt_path(adventure_path)}.response.md"
 
 def run(adventure_path: str, dry_run: bool = False):
     input_path = Path(adventure_path)
@@ -10,16 +19,10 @@ def run(adventure_path: str, dry_run: bool = False):
         print(f"Error: {adventure_path} not found.")
         sys.exit(1)
 
-    print("❌ Warning: output will likely be truncated due to size", file=sys.stderr)
-
-    input_name = Path(adventure_path).stem
-
     work_dir = Path("work")
     work_dir.mkdir(exist_ok=True)
 
-    # Read in the full adventure structure markdown
-    with open(input_path, 'r', encoding='utf-8') as f:
-        adventure_text = f.read()
+    adventure_text = pdf_2_text(input_path)
 
     # Set up Jinja2 environment and load prompt template
     env = Environment(loader=FileSystemLoader('templates'))
@@ -29,4 +32,4 @@ def run(adventure_path: str, dry_run: bool = False):
     prompt= template.render(adventure_text=adventure_text)
 
     # Use the LLM helper to save prompt and optionally call OpenRouter
-    send_prompt_to_openrouter(prompt_md=prompt, prompt_name=input_name.replace("_structure", "_summary_prompt"), dry_run=dry_run)
+    send_prompt_to_openrouter(prompt_md=prompt, prompt_name=prompt_path(adventure_path), dry_run=dry_run)

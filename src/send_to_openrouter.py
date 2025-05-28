@@ -40,7 +40,10 @@ def main():
             #model="google/gemini-2.5-pro-exp-03-25",
             # Output is utter garbage
             #model="google/gemma-3-1b-it:free",
+            # This one does a good job
             model="google/gemma-3-27b-it:free",
+            # $$$
+            #model="anthropic/claude-3-haiku",
             messages=[
                 {"role": "user", "content": prompt_text}
             ],
@@ -50,7 +53,7 @@ def main():
             }
         )
 
-        print("✅ Response received from Gemini", file=sys.stderr)
+        print("✅ Response received from LLM", file=sys.stderr)
         print(completion.choices[0].message.content)
 
     except Exception as e:

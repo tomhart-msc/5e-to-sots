@@ -18,7 +18,6 @@ def main():
     # parse-scenes
     parser_scenes = subparsers.add_parser("parse-scenes", help="Convert structure.yaml into scene_XX.yaml files")
     parser_scenes.add_argument("--structure", required=True, help="Path to structured YAML file")
-    parser_scenes.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
 
     parser_adversaries = subparsers.add_parser("extract-adversaries", help="Extract D&D stat blocks from adventure markdown")
     parser_adversaries.add_argument("--markdown", required=True, help="Path to adventure .md")
@@ -41,19 +40,22 @@ def main():
     parser_summarize_adventure.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
 
     args = parser.parse_args()
-    dry_run = args.dry_run
 
     if args.command == "extract-structure":
+        dry_run = args.dry_run
         extract_structure.run(pdf_path=args.pdf, dry_run=dry_run)
     elif args.command == "parse-scenes":
         parse_structure.run(structure_path=args.structure)
     elif args.command == "extract-adversaries":
         extract_adversaries.run(markdown_path=args.markdown)
     elif args.command == "convert-scene":
+        dry_run = args.dry_run
         convert_scene.run(scene_path=args.scene, adventure_outline_path=args.adventure_outline, notes_path=args.notes, dry_run=dry_run)
     elif args.command == "convert-adventure":
+        dry_run = args.dry_run
         convert_adventure.run(adventure_path=args.adventure, notes_path=args.notes)
     elif args.command == "summarize-adventure":
+        dry_run = args.dry_run
         summarize_adventure.run(adventure_path=args.adventure, dry_run=dry_run)
 
 if __name__ == "__main__":

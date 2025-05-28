@@ -5,44 +5,67 @@
 
 ## 🎯 Conversion Task
 
-You are converting a D&D 5e adventure into a Swords of the Serpentine (SotS) adventure.
+You are converting a D&D 5E adventure into a *Swords of the Serpentine* (SotS) adventure.
 
-The source material is below. Break it into **SotS-style scenes** — narrative units built around investigation, choice, and discovery.
+The source excerpt is below. Break it into **distinct scenes** built around investigation, mystery, sorcery, danger, or social leverage. Each scene should identify any **objective or ritual** needed to progress, if one exists.
 
-Each scene should feel like a mystery chapter: a chance to uncover something dangerous, political, or ancient. Use investigative abilities where possible. Include a variety of potential leads and ways for heroes to gain leverage.
+Remember that the output MUST be in YAML using the format described in "🧩 Output Format", below.
 
 ---
 
 ## 📚 Source Excerpt
 
-{{ source.source_excerpt }}
+{{ adventure_text.strip() }}
 
 ---
 
 ## 🧩 Output Format
 
-Produce a **scene outline** with the following format:
+Return structured YAML for each scene using the following format:
 
-### Scene {{ number }}: {{ title }}
-- **Type**: CORE / OPTIONAL / MONTAGE
-- **Purpose**: One sentence describing what this scene does (e.g. introduce a mystery, reveal a faction secret)
-- **Lead-In**: How this scene might begin or connect from others
-- **Lead-Out**: Where this scene might go next (choices or follow-up scenes)
-- **Location**: Brief description of the setting
-- **Potential Clues** (Investigative Abilities):
-  - Forgotten Lore: ...
-  - City’s Secrets: ...
-  - Spirit Sight: ...
-- **Complications / Events** (optional): What might disrupt or escalate this scene?
+```yaml
+scene_number: 1
+scene_title: Sanctuary Preparation
+scene_type: CORE | OPTIONAL | MONTAGE
+summary: One-sentence summary of what the scene does.
+location: Short description of the setting.
+needs_conversion: true | false  # If the scene is only flavor or scenery, mark false.
 
-Repeat for each scene you identify.
+# Optional: Include if players must overcome a challenge to progress
+objective_to_progress: >
+  The players must correctly perform an ancient ritual to ascend to the next floor.
 
----
+required_steps:                # Optional: List specific actions needed (if applicable)
+  - Don ceremonial robes
+  - Trace the sun symbol
+  - Light incense on altar
 
-## ⚠️ Important Constraints
+clue_sources:                  # Optional: Clues that help players discover the steps
+  - Forgotten Lore: Robes are embroidered with ritual instructions
+  - Vigilance: Scorch marks suggest incense was used
+  - Spirit Sight: Font pulses faintly with celestial resonance
 
-- Do not summarize the D&D text. Instead, **translate it into distinct SotS scenes**.
-- Focus on **investigation, danger, and social tension**, not combat or exploration for its own sake.
-- Avoid monsters as random threats. Use them symbolically, sparingly, and in private or secret spaces.
-- Don’t assume heroic motivation — characters act for ambition, survival, or power.
+success_outcome: >             # Optional
+  The sun disc glows and a golden stairway appears.
+
+failure_outcome: >             # Optional
+  A backlash of divine wrath chills the air and marks the players.
+
+complications:                # Optional
+  - Performing the ritual draws the attention of a rival faction
+  - Desecration summons a spiritual guardian
+```
+
+Repeat this block for each scene found in the excerpt.
+
+⚠️ Important Constraints
+If the scene has no challenge or obstacle, omit the objective_to_progress, required_steps, etc.
+
+Do not invent goals or rituals unless they clearly exist in the original text.
+
+If a scene is just atmospheric or connective, mark needs_conversion: false
+
+Favor scenes with investigation, ambiguity, social danger, or ancient power.
+
+Avoid generic monsters or combat-only encounters unless they’re symbolic or factional.
 

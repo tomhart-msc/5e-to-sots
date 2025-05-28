@@ -28,6 +28,8 @@ def render_adventure_prompt(adventure_text, gm_notes, rules_reference, setting_r
 def run(adventure_path: str, notes_path: str = None, dry_run: bool = False):
     adventure_stem = Path(adventure_path).stem
 
+    print("❌ Warning: converting a whole adventure at once. Input will probably be truncated.", file=sys.stderr)
+
     adventure_text = load_file(adventure_path)
     gm_notes = load_file(notes_path)
     rules_reference = load_file(DATA_DIR / "rules_reference.md")

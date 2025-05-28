@@ -21,17 +21,9 @@ Use the following outline as background context. Refer to it implicitly when int
 
 ## 📚 Source Scene (Unconverted)
 
-**Scene {{ scene.scene_number }}: {{ scene.scene_title }}**
-
-**Purpose**: {{ scene.purpose }}
-
-{% if scene.location %}
-**Location**: {{ scene.location }}
-{% endif %}
-
-**Excerpt from 5E adventure:**
-
-{{ scene.content_excerpt.strip() }}
+```yaml
+{{ scene }}
+```
 
 
 ---
