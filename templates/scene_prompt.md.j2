@@ -30,6 +30,23 @@ Use the following outline as background context. Refer to it implicitly when int
 
 ## 🧠 GM Intent
 
+### Adventure Scope
+
+{%- if adventure_gm_notes.tone %}
+Tone: {{ adventure_gm_notes.tone }}
+{%- endif %}
+{%- if adventure_gm_notes.obstacles %}
+Obstacles: {{ adventure_gm_notes.obstacles }}
+{%- endif %}
+{%- if adventure_gm_notes.notes %}
+Notes:
+{{ adventure_gm_notes.notes.strip() }}
+{%- endif %}
+{%- if adventure_gm_notes.allow_invention %}
+You are encouraged to invent new details that are fitting to the Swords of the Serpentine setting — including factions, social complications, investigative clues, and magical consequences.
+{%- endif %}
+
+### Scene Scope
 {% if gm_notes.tone -%}
 **Tone**: {{ gm_notes.tone }}
 {%- endif %}

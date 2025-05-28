@@ -3,7 +3,7 @@
 ## Tone
 Solemn, mysterious, and alien. This tower is dedicated to the Sun God, not Denari, and its faith is alien to the characters.
 
-## Intent
+## Notes
 This is the first real test — a ritual of faith and tradition. I want the players to figure out what to do by examining their surroundings. 
 
 The clues in this scene MUST tell the players EXPLICITLY how to perform the ritual to advance further into the tower.
