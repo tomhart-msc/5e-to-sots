@@ -1,6 +1,7 @@
 import yaml
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+from src.llm_utils import send_prompt_to_openrouter
 
 def load_yaml(path):
     with open(path, "r", encoding="utf-8") as f:
@@ -33,13 +34,14 @@ def load_notes_md(path):
         "allow_invention": allow_invention
     }
 
-def run(scene_path: str, adventure_outline_path: str, notes_path: str = None):
+def run(scene_path: str, adventure_outline_path: str, notes_path: str = None, dry_run: bool = False):
     scene_file = Path(scene_path)
     notes_file = Path(notes_path) if notes_path else None
     input_name = scene_file.stem.replace("scene_", "")
-    output_path = Path("input") / f"scene_{input_name}_prompt.md"
-    output_path.parent.mkdir(exist_ok=True)
-
+    
+    work_dir = Path("work")
+    work_dir.mkdir(exist_ok=True)
+    
     scene_data = load_yaml(scene_file)
     gm_notes = load_notes_md(notes_file) if notes_file and notes_file.exists() else {}
     adventure_outline = Path(adventure_outline_path).read_text(encoding="utf-8")
@@ -59,6 +61,5 @@ def run(scene_path: str, adventure_outline_path: str, notes_path: str = None):
         setting_reference=setting_reference
     )
 
-    output_path.write_text(prompt, encoding="utf-8")
-    print(f"Prompt written to {output_path}")
-
+    # Use the LLM helper to save prompt and optionally call OpenRouter
+    send_prompt_to_openrouter(prompt_md=prompt, prompt_name=f"scene_{input_name}_prompt", dry_run=dry_run)

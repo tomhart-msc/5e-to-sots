@@ -2,12 +2,20 @@ import os
 import sys
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+from src.llm_utils import send_prompt_to_openrouter
 
-def run(adventure_path: str):
+def run(adventure_path: str, dry_run: bool = False):
     input_path = Path(adventure_path)
     if not input_path.exists():
         print(f"Error: {adventure_path} not found.")
         sys.exit(1)
+
+    print("❌ Warning: output will likely be truncated due to size", file=sys.stderr)
+
+    input_name = Path(adventure_path).stem
+
+    work_dir = Path("work")
+    work_dir.mkdir(exist_ok=True)
 
     # Read in the full adventure structure markdown
     with open(input_path, 'r', encoding='utf-8') as f:
@@ -18,11 +26,7 @@ def run(adventure_path: str):
     template = env.get_template('summarize_adventure_prompt.md.j2')
 
     # Render the prompt with the adventure text injected
-    prompt_text = template.render(adventure_text=adventure_text)
+    prompt= template.render(adventure_text=adventure_text)
 
-    # Output prompt file to same folder as input
-    output_path = Path("input") / input_path.name.replace("_structure.md", "_summary_prompt.md")
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(prompt_text)
-
-    print(f"Prompt written to {output_path}")
+    # Use the LLM helper to save prompt and optionally call OpenRouter
+    send_prompt_to_openrouter(prompt_md=prompt, prompt_name=input_name.replace("_structure", "_summary_prompt"), dry_run=dry_run)

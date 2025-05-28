@@ -1,5 +1,6 @@
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+from src.llm_utils import send_prompt_to_openrouter
 
 DATA_DIR = Path("data")
 TEMPLATES_DIR = Path("templates")
@@ -24,9 +25,8 @@ def render_adventure_prompt(adventure_text, gm_notes, rules_reference, setting_r
     )
 
 
-def run(adventure_path: str, notes_path: str = None):
-    adventure_stem = Path(adventure_path).stem.replace("_structure", "")
-    output_path = INPUT_DIR / f"{adventure_stem}_prompt.md"
+def run(adventure_path: str, notes_path: str = None, dry_run: bool = False):
+    adventure_stem = Path(adventure_path).stem
 
     adventure_text = load_file(adventure_path)
     gm_notes = load_file(notes_path)
@@ -35,7 +35,5 @@ def run(adventure_path: str, notes_path: str = None):
 
     prompt = render_adventure_prompt(adventure_text, gm_notes, rules_reference, setting_reference)
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(prompt)
-
-    print(f"Prompt written to {output_path}")
+    # Use the LLM helper to save prompt and optionally call OpenRouter
+    send_prompt_to_openrouter(prompt_md=prompt, prompt_name=adventure_stem.replace("_structure", "_adventure_prompt"), dry_run=dry_run)
