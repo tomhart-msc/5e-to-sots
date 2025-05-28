@@ -1,3 +1,18 @@
-jinja2
-pyyaml
+# PDF parsing
+PyMuPDF==1.23.22
+
+# YAML support
+PyYAML==6.0.1
+
+# LLM API (OpenAI)
+openai>=1.0.0
+
+# Progress bars for feedback
+tqdm==4.66.2
+
+# Prompt rendering
+Jinja2==3.1.3
+
+# Optional: load .env files for secrets
+python-dotenv==1.0.1
 

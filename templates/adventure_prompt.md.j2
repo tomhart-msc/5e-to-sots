@@ -1,55 +1,30 @@
-{{ system_reference }}
+{{ rules_reference }}
 {{ setting_reference }}
 
 ---
 
 ## 🎯 Conversion Task
 
-You are converting a Dungeons & Dragons 5E scene into a *Swords of the Serpentine* (SotS) scene.
+You are converting an entire Dungeons & Dragons 5E adventure into *Swords of the Serpentine* (SotS).
 
-Use the system and setting reference above to guide your decisions.
-
----
-
-## Adventure Outline (Unconverted)
-
-Use the following outline as background context. Refer to it implicitly when interpreting the scene.
-
-{{ adventure_outline.strip() }}
+Use the system and setting reference above to guide your decisions. This adventure consists of multiple scenes, and you will interpret the structure, purpose, and tone of each one through the lens of SotS.
 
 ---
 
-## 📚 Source Scene (Unconverted)
+## 📚 Source Adventure
 
-**Scene {{ scene.scene_number }}: {{ scene.scene_title }}**
+The following is a structural outline and content excerpt of the 5E adventure:
 
-**Purpose**: {{ scene.purpose }}
+{{ adventure_text.strip() }}
 
-{% if scene.location %}
-**Location**: {{ scene.location }}
-{% endif %}
-
-**Excerpt from 5E adventure:**
-
-{{ scene.content_excerpt.strip() }}
-
-
+{% if gm_notes -%}
 ---
 
 ## 🧠 GM Intent
 
-{% if gm_notes.tone -%}
-**Tone**: {{ gm_notes.tone }}
-{%- endif %}
-{% if gm_notes.obstacles -%}
-**Obstacles**: {{ gm_notes.obstacles }}
-{%- endif %}
-{% if gm_notes.notes -%}
-**Notes**:
-{{ gm_notes.notes.strip() }}
-{%- endif %}
-{% if gm_notes.allow_invention %}
-You are encouraged to invent new details that are fitting to the Swords of the Serpentine setting — including factions, social complications, investigative clues, and magical consequences.
+The following GM notes provide information on tone, intent, obstacles, and license to invent:
+
+{{ gm_notes.strip() }}
 {% endif %}
 
 ---
@@ -63,9 +38,9 @@ You are encouraged to invent new details that are fitting to the Swords of the S
 
 ---
 
-## 📤 Output Format (SotS Scene Block)
+## 📤 Output Format (List of SotS Scenes)
 
-Output the converted scene as structured YAML or Markdown with the following fields:
+Output each scene as structured YAML or Markdown blocks with the following fields:
 
 - `scene_number`
 - `scene_title`
@@ -79,3 +54,4 @@ Output the converted scene as structured YAML or Markdown with the following fie
 - `adversaries`: If any, describe them briefly
 - `faction_ties`: Any faction involvement or stakes
 
+You may combine shorter scenes or omit scenes that do not contribute meaningfully to drama or investigation. Always prioritize interpretive, factional, and sorcerous elements in alignment with the SotS tone.

@@ -56,7 +56,7 @@ Each scene should contain at least one clue for an appropriate Investigative abi
   *“The ink on this scroll is still drying.”*
 
 ### 🔮 Sorcerer Abilities
-- **Corruption** – Understand the presence and signs of dark magic.  
+- **Corruption** – Reveals the presence and consequences of sorcery or unnatural influence. It does not indicate moral evil or physical decay — it identifies how magic has altered the world, even subtly.
   *“These wards were written in blood and hate.”*
 - **Forgotten Lore** – Identify ancient or mythic references.  
   *“The idol is pre-Serpentine — long before Denari.”*
@@ -84,6 +84,13 @@ Each scene should contain at least one clue for an appropriate Investigative abi
   *“They say she was seen near the flooded quarter — twice.”*
 - **Skulduggery** – Gather secrets via espionage, shadowing.  
   *“You lift a note from his pocket: it’s written in cipher.”*
+
+Clarification on Corruption: Use the Corruption investigative ability when:
+- The environment has been reshaped by sorcery
+- Reality feels subtly off (e.g. time, geometry, perception)
+- An object or ritual might have arcane power or origin
+- People behave strangely due to magical influence
+Do *not* confuse Corruption with evil, greed, or desecration. In SotS, Corruption refers to arcane intrusion into the world — a metaphysical warping that marks the presence of power. 
 
 ---
 
@@ -129,6 +136,11 @@ Each scene should contain at least one clue for an appropriate Investigative abi
   - **Externalized**: Your environment becomes warped or haunted.
 - Sorcery is powered by Corruption. Using it leaves narrative and mechanical traces.
 - Sorcerers are feared and usually act in secret.
+
+Clarification: "Corruption" is not a moral judgment.
+It does not detect sinful behavior or emotional weakness. Instead, it identifies how sorcery has transformed people, places, or reality.
+A sanctified altar desecrated by greed is not corrupt.
+A sanctified altar now weeping mercury because it was used in a blood-ritual is.
 
 ---
 
