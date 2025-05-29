@@ -74,17 +74,52 @@ You are encouraged to invent new details that are fitting to the Swords of the S
 
 ## 📤 Output Format (SotS Scene Block)
 
-Output the converted scene as structured YAML or Markdown with the following fields:
+Output the converted scene Markdown with the following structure:
 
-- `scene_number`
-- `scene_title`
-- `scene_type` (CORE / OPTIONAL / MONTAGE)
-- `summary`: What happens in the scene and why it matters
-- `location`: Description of where this takes place
-- `leads`: What new scenes or threads this might connect to
-- `clues`: Investigative clues available in the scene (mapped to abilities)
-- `challenges`: General ability challenges (TN 4–8+)
-- `complications`: Optional twists, moral hazards, rival actions
-- `adversaries`: If any, describe them briefly
-- `faction_ties`: Any faction involvement or stakes
+```
+## Scene #: [Scene Title]
 
+**Scene Type:** [e.g., INTRO, MONTAGE, CORE]
+**Lead-In:** [Previous Scene/Condition, e.g., None, Scene 1]
+**Lead-Out:** [Next Scene/Condition, e.g., Scene 2, Scene 4]
+
+### Opening the Scene
+
+[A general description of the scene's starting conditions and purpose. Set the mood, time, and environment. Describe what the Heroes encounter immediately.]
+
+### Key Events and Information
+
+* **[Sub-heading for an event or discovery]:** [Detailed description of the event, interactions, or important information. This can include immediate challenges, important dialogue, or sensory details.]
+    * [Further details or bullet points related to this event.]
+* **[Another sub-heading]:** [Description of another key event or piece of information.]
+
+### Characters and Adversaries
+
+**[Character Name/Group Name]**
+[Brief descriptive adjectives, e.g., Charming, swashbuckling, sarcastic]
+
+* **Defense - Health:** [Health Threshold, Armor, Health]
+* **Defense - Morale:** [Morale Threshold, Grit, Morale]
+* **Offense - [Ability, e.g., Warfare, Sway]:** [Modifier; Damage (Weapon/Method)]
+* **Abilities:** [Special abilities or significant Malus]
+* **Special Abilities:** [Unique actions or narrative effects]
+* **Misc:** [Additional notes for the GM about roleplaying or tactics]
+* **Refresh Tokens:** [Number of tokens provided when defeated]
+
+### Clues and Leads
+
+[How Heroes can gain information or clues within the scene. List relevant Investigative abilities and the information they reveal.]
+
+* **[Investigative Ability] (core lead/optional lead):** [Description of the clue or information gained, and how it points to other scenes or aspects of the adventure.]
+* **[Another Investigative Ability]:** [Description of another clue.]
+
+### Closing the Scene
+
+[Describe how the scene concludes and transitions to the next. What must happen for the scene to end? What are the immediate consequences or next steps?]
+
+### GM Advice
+
+[Any specific tips, reminders, or optional rules for the Game Master related to running this scene.]
+```
+
+Output **only** markdown with no other output, and do not enclose it in a code block.

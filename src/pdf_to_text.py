@@ -24,4 +24,4 @@ def pdf_2_text(pdf_path):
     adventure_text_chunks = []
     for i, chunk in enumerate(chunks):
         adventure_text_chunks.append(textwrap.indent(chunk.strip(), "    "))
-    adventure_text = "\n\n".join(adventure_text_chunks)
+    return "\n\n".join(adventure_text_chunks)

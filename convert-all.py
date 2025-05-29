@@ -45,16 +45,18 @@ def main():
         return 1
 
     # Step 1: Extract structure
-    run_cmd(["./convert.py", "extract-structure", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
     structure_md = response_funcs["extract_structure"](input_pdf)
+    if not structure_md.exists():
+        run_cmd(["./convert.py", "extract-structure", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
 
     if not structure_md.exists():
         print(f"Error: {structure_md} not found.")
         return 1
 
     # Step 2: Summarize adventure
-    run_cmd(["./convert.py", "summarize-adventure", "--adventure", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
     summary_md = response_funcs["summarize_adventure"](input_pdf)
+    if not summary_md.exists():
+        run_cmd(["./convert.py", "summarize-adventure", "--adventure", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
 
     if not summary_md.exists():
         print(f"Error: {summary_md} not found.")
@@ -69,15 +71,17 @@ def main():
     for scene_file in sorted(scene_dir.glob("scene_*.yaml")):
         scene_name = scene_file.stem  # e.g., "scene_03"
         notes_file = notes_dir / f"{scene_name}_notes.md"
-        cmd = ["./convert.py", "convert-scene", "--scene", str(scene_file), "--adventure-outline", str(summary_md)]
-        if notes_file.exists():
-            cmd += ["--notes", str(notes_file)]
-        if args.dry_run:
-            cmd += ["--dry-run"]
-        run_cmd(cmd)
+        scene_summary_md = response_funcs["convert_scene"](scene_file)
+        if not scene_summary_md.exists():
+            cmd = ["./convert.py", "convert-scene", "--scene", str(scene_file), "--adventure-outline", str(summary_md)]
+            if notes_file.exists():
+                cmd += ["--notes", str(notes_file)]
+            if args.dry_run:
+                cmd += ["--dry-run"]
+            run_cmd(cmd)
 
     # Step 5: Combine all output scene files and generate PDF
-    output_files = sorted(Path("work").glob("scene_*_output.md"))
+    output_files = sorted(Path("work").glob("scene_*_prompt.response.md"))
     combined_md = Path("work/converted_adventure.md")
     with open(combined_md, "w") as outfile:
         for file in output_files:

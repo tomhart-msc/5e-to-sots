@@ -21,7 +21,7 @@ def load_notes_md(path):
     intent = ""
     allow_invention = False
     current_section = None
-    sections = {"tone": "", "intent": "", "obstacles": "", "allow invention": ""}
+    sections = {"tone": "", "notes": "", "obstacles": "", "allow invention": ""}
 
     with open(path, encoding="utf-8") as f:
         for line in f:
@@ -32,13 +32,13 @@ def load_notes_md(path):
                 sections[current_section] += line + "\n"
 
     tone = sections["tone"].strip()
-    intent = sections["intent"].strip()
+    notes = sections["notes"].strip()
     obstacles = sections["obstacles"].strip()
     allow_invention = "yes" in sections["allow invention"].lower()
 
     return {
         "tone": tone or None,
-        "notes": intent or "",
+        "notes": notes or "",
         "obstacles": obstacles or None,
         "allow_invention": allow_invention
     }
@@ -59,7 +59,9 @@ def run(scene_path: str, adventure_outline_path: str, notes_path: str = None, dr
     work_dir = Path("work")
     work_dir.mkdir(exist_ok=True)
     
+    adventure_notes_file = Path("notes/adventure_notes.md")
     scene_data = load_yaml(scene_file)
+    adventure_gm_notes = load_notes_md(adventure_notes_file) if adventure_notes_file.exists() else {}
     gm_notes = load_notes_md(notes_file) if notes_file and notes_file.exists() else {}
     adventure_outline = Path(adventure_outline_path).read_text(encoding="utf-8")
 
@@ -72,6 +74,7 @@ def run(scene_path: str, adventure_outline_path: str, notes_path: str = None, dr
     template = env.get_template("scene_prompt.md.j2")
     prompt = template.render(
         scene=scene_data,
+        adventure_gm_notes=adventure_gm_notes,
         gm_notes=gm_notes,
         adventure_outline=adventure_outline,
         system_reference=rules_reference,

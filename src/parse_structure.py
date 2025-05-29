@@ -1,4 +1,5 @@
 import yaml
+import re
 from pathlib import Path
 
 def load_yaml(path):
@@ -11,13 +12,27 @@ def load_yaml(path):
     if lines and lines[-1].strip() == "```":
         lines = lines[:-1]
 
-    cleaned = "".join(lines)
+    text = "".join(lines)
 
-    # Load all documents (returns a generator)
-    docs = list(yaml.safe_load_all(cleaned))
+    # Split into individual scenes based on 'scene_number:' at the beginning of a line
+    parts = re.split(r'(?=^scene_number:\s*\d+)', text, flags=re.MULTILINE)
+    scenes = []
 
-    # Return a single doc or the whole list depending on how many documents exist
-    return docs[0] if len(docs) == 1 else docs
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        try:
+            doc = yaml.safe_load(part)
+            if isinstance(doc, dict):
+                scenes.append(doc)
+            else:
+                print(f"[WARN] Skipped non-dict scene block")
+        except Exception as e:
+            print(f"[ERROR] Failed to parse scene:\n{part}\n{e}")
+            continue
+
+    return scenes
 
 def run(structure_path):
     data = load_yaml(structure_path)
