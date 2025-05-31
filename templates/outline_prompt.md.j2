@@ -11,6 +11,47 @@ The source excerpt is below. Break it into **distinct scenes** built around inve
 
 Remember that the output MUST be in YAML using the format described in "🧩 Output Format", below.
 
+## 🧩 Scene Design for LLM Conversion
+
+> When converting scenes, apply the following design guidelines.
+
+- **Every scene must include at least one Core Lead** discoverable via Investigative abilities.
+- Leads are tied to a specific ability (e.g., *Forgotten Lore*, *City’s Secrets*).
+- **No rolling for clues.** If a character has the ability and context, they get the clue.
+- Include optional General ability challenges (with TNs) when tension or risk matters.
+- Clues should often introduce faction ties, ancient history, or secrets worth killing for.
+
+---
+
+## 💡 Advanced Scene Cohesion Rules for LLM (CRITICAL)
+
+⚠️ **Your primary directive is to create coherent, narrative scenes, NOT a room-by-room breakdown.**
+**Think like a GM planning a session, not an architect drawing a floor plan.**
+
+**Combine multiple rooms into a single scene when they directly contribute to ONE primary objective or ritual AND are freely accessible.** This is paramount for SotS's investigative flow.
+
+### **Explicit Grouping Rule:**
+
+* **If a sequence of rooms (e.g., Room A, Room B, Room C) contains components for a SINGLE, CONTINUOUS RITUAL or a SHARED OBJECTIVE, these rooms MUST be grouped into ONE scene.** The progression between them should be seamless and part of a larger narrative beat.
+* **Identify the main objective/ritual.** All rooms contributing to *that single objective* form one scene.
+
+**Example Scenario (DO THIS!):**
+* **Source Text Rooms:** "Entry Hall", "Sacristy", "Vestry", "Sanctuary"
+* **Underlying Objective:** "Perform the Temple's Cleansing Ritual"
+* **CORRECT SCENE GROUPING:**
+    * **Scene 1: "Temple Cleansing Ritual"**
+        * **Locations:** Entry Hall, Sacristy, Vestry, Sanctuary
+        * **Objective:** Players must prepare and perform the ritual across these interconnected spaces.
+        * **Clues:** Found in any of these rooms, all contributing to *how* to perform the ritual.
+
+### **Indicators for a NEW Scene (Only Split When These Apply):**
+
+* **MAJOR Obstacle/Barrier:** A physical or magical block (like the amber material) that *must* be overcome to progress.
+* **Significant Time Skip:** A clear narrative break.
+* **New Primary Objective:** The core goal changes from the previous one.
+* **Shift in Tone/Threat:** A sudden introduction of combat, a major social encounter, or a significant environmental hazard that dominates the new area.
+* **Unrelated Investigative Thread:** Clues for a completely new mystery that doesn't tie into the current objective.
+
 ---
 
 ## 📚 Source Excerpt
@@ -28,8 +69,12 @@ scene_number: 1
 scene_title: Sanctuary Preparation
 scene_type: CORE | OPTIONAL | MONTAGE
 summary: One-sentence summary of what the scene does.
-location: Short description of the setting.
-needs_conversion: true | false  # If the scene is only flavor or scenery, mark false.
+location: # THIS CAN BE A STRING OR A LIST OF STRINGS
+  - Entry Hall
+  - Sacristy
+  - Vestry
+  - Sanctuary
+needs_conversion: true # If the scene is only flavor or scenery, mark false.
 
 # Optional: Include if players must overcome a challenge to progress
 objective_to_progress: >

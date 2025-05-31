@@ -5,18 +5,18 @@ from jinja2 import Environment, FileSystemLoader
 from src.llm_utils import send_prompt_to_openrouter
 from src.pdf_to_text import pdf_2_text
 
-def prompt_path(adventure_path: str):
-    input_name = Path(adventure_path).stem
+def prompt_path(pdf_path: str):
+    input_name = Path(pdf_path).stem
     return f"{input_name}_summary_prompt"
 
-def response_path(adventure_path: str):
+def response_path(pdf_path: str):
     work_dir = Path("work")
-    return work_dir / f"{prompt_path(adventure_path)}.response.md"
+    return work_dir / f"{prompt_path(pdf_path)}.response.md"
 
-def run(adventure_path: str, dry_run: bool = False):
-    input_path = Path(adventure_path)
+def run(pdf_path: str, dry_run: bool = False):
+    input_path = Path(pdf_path)
     if not input_path.exists():
-        print(f"Error: {adventure_path} not found.")
+        print(f"Error: {pdf_path} not found.")
         sys.exit(1)
 
     work_dir = Path("work")
@@ -32,4 +32,4 @@ def run(adventure_path: str, dry_run: bool = False):
     prompt= template.render(adventure_text=adventure_text)
 
     # Use the LLM helper to save prompt and optionally call OpenRouter
-    send_prompt_to_openrouter(prompt_md=prompt, prompt_name=prompt_path(adventure_path), dry_run=dry_run)
+    send_prompt_to_openrouter(prompt_md=prompt, prompt_name=prompt_path(pdf_path), dry_run=dry_run)

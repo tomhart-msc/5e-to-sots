@@ -1,0 +1,1 @@
+Combine: Sacristy, Vestry, Sanctuary

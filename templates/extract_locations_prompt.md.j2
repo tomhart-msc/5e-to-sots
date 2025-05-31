@@ -1,0 +1,45 @@
+{{ system_reference }}
+{{ setting_reference }}
+
+---
+
+## 🎯 Task: Extract Locations
+
+You are analyzing an adventure module to identify distinct physical locations or areas mentioned within the text.
+
+Your goal is to extract a list of all unique named locations or significant areas described. For each identified location, provide its name and the direct text segments from the source that describe it.
+
+Prioritize concrete, named places (e.g., "Sacristy", "Vestry", "Crypt", "Main Altar"). Do not invent locations. Only list locations explicitly present in the text.
+
+## 📚 Source Excerpt
+
+{{ adventure_text.strip() }}
+
+---
+
+## 🧩 Output Format
+
+Return a single YAML list of locations, each with a `name` and `description_text` key.
+The `description_text` should contain *only* the relevant paragraphs or sentences from the source that describe that specific location, without any additional commentary.
+
+```yaml
+locations:
+  - name: Entry Hall
+    description_text: |
+      The entry hall is dimly lit...
+      Ancient tapestries adorn the walls...
+  - name: Sacristy
+    description_text: |
+      A small, dusty room adjacent to the main hall.
+      It contains old ceremonial robes and a locked chest.
+  - name: Vestry
+    description_text: |
+      Connecting the sacristy to the sanctuary, the vestry is filled with discarded religious artifacts.
+  - name: Sanctuary
+    description_text: |
+      The main chamber of the temple, dominated by a large, cracked altar.
+      Light filters through stained-glass windows depicting ancient gods.
+  - name: Hidden Crypt
+    description_text: |
+      Beneath the sanctuary lies a forgotten crypt, damp and filled with the scent of decay.
+      Sarcophagi line the walls.
