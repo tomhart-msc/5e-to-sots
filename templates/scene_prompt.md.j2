@@ -5,7 +5,16 @@
 
 ## 🎯 Conversion Task
 
-You are converting a Dungeons & Dragons 5E scene into a *Swords of the Serpentine* (SotS) scene.
+Your primary goal is to transform the provided adventure excerpt into a ***dynamic Swords of the Serpentine scene, prioritizing investigative discovery and narrative consequence***.
+Do not simply translate; adapt the scene to fit SotS's core mechanics where clue discovery is automatic and drives the plot.
+
+For each scene, ensure you:
+- **Identify and elaborate on Core Leads**: These are essential clues that the Heroes must discover to advance the main plot. They are automatically revealed when a relevant Investigative ability is used in context. Think about what information is critical for the Heroes to learn to move to the next logical scene or confront the next challenge.
+- **Integrate Optional Leads: Provide additional, interesting clues that offer deeper insight, reveal side plots, or grant advantages**. These are also automatically revealed but might require more specific or less obvious applications of Investigative abilities.
+- **Focus on the 'Why' of the Clue**: For each clue, clearly state what specific information it reveals and how it connects to the broader adventure or points towards subsequent scenes/NPCs. (e.g., 'Charm (core lead): If she feels like she’s in a position of power, the captain of the Squandered Hope might find a Hero attractive... she’ll reveal secrets to impress them.' )
+- **Design for Player Agency**: Ensure the scene presents choices that matter, whether in which clues to pursue, which NPCs to interact with, or how to approach challenges. The discovery of clues should open up new avenues, not just confirm existing suspicions.
+- **Maintain SotS Tone**: Weave in elements of social leverage, ancient secrets, faction politics, and moral ambiguity, as emphasized in the System Summary.
+- **Scene Pacing**: Clearly define the entry and exit conditions for the scene. What needs to happen for the scene to conclude and transition fluidly to the next? (e.g., 'The scene ends once the Heroes have survived the pirate raid and questioned any survivors.' )"
 
 Use the system and setting reference above to guide your decisions.
 
@@ -66,18 +75,21 @@ You are encouraged to invent new details that are fitting to the Swords of the S
 ## 🧠 How to Replace D&D-Style Skill Checks
 
 Swords of the Serpentine is not D&D. It is not about skill checks to uncover information. It is about weaving the world into the investigation.
+When converting D&D-style skill checks, apply the following Swords of the Serpentine (SotS) principles:
 
-- If a D&D scene used **Intelligence (Religion)** or **Investigation**, you must not translate that into a roll or "check" of any kind.
-- Instead, ask: *What detail in the environment could convey that information?* Then describe how **Investigative Abilities** uncover it.
-- Be creative. Add new objects, visions, writing, spirits, murals, or reactions from NPCs — anything the players could notice, question, or infer.
-- Label each clue with the appropriate Investigative Ability. These abilities are never rolled — they *automatically* succeed if used.
+### Investigative Abilities (Clue Discovery - NO ROLL):
 
-**Example**  
-If the D&D scene says:  
-> "Make an Intelligence (Religion) check to identify the statue."  
-You should instead write:  
-> “The statue depicts a forgotten Sun God of renewal.  
-> - **Forgotten Lore (Core Lead):** The hieroglyphs mark the deity as ‘Re-Aten,’ a pre-Denari sun aspect. Worship of him ended centuries ago.”
+- **Automatic Success for Clues**: If the original D&D check was meant to uncover a piece of information or a clue (eg. Investigation, Religion, Perception, Arcana, History), this translates directly to an Investigative ability. No roll is made. Simply describe which Investigative ability (e.g., Vigilance, Forgotten Lore, Charm, Laws & Traditions, Corruption, etc.) would reveal the clue, and then state what information is gained.
+- **Create Clue Opportunities**: Actively look for implicit information or elements in the original scene that could logically be revealed by an Investigative ability in SotS, even if the D&D adventure didn't explicitly call for a check. (e.g., A foul smell in a neighborhood could lead to a Vigilance clue about the source.)
+- **List Clearly**: Under a 'Clues and Leads' sub-heading, list each clue with the relevant Investigative ability (or abilities), clearly indicating if it's a 'core lead' or 'optional lead,' and detailing the specific information discovered.
+- **Multiple Abilities for One Clue**: If multiple Investigative abilities could logically reveal the same core or optional lead, provide them as alternatives (e.g., 'Charm or Intimidation (core lead): ...' ).
+
+### General Abilities (Risky Actions - ROLL WITH CONSEQUENCE):
+
+- **Meaningful Failure**: If the original D&D check involved a risky action with a chance of failure (e.g., picking a lock, climbing a wall, persuading an NPC under pressure, fighting), this translates to a General ability roll. The outcome of failure must be meaningful and push the narrative forward, not simply stop the action. (e.g., 'Difficulty 4 Stealth test to enter... failure means they knock the statue over and alert the house to intruders.' )
+- **General Spends**: Consider when a General Spend (spending pool points for a guaranteed effect) is appropriate for a challenging task, rather than a roll (e.g., 'a 4-point Athletics General Spend' to move a heavy statue ).
+- **Clear Stakes**: For any General ability use, clearly define the stakes of success and failure and what happens if the Heroes roll poorly.
+- **Avoid Gating Essential Information**: Remember the core principle: Clues are never gated behind rolls or arbitrary narration. If information is essential to the plot, it must be discoverable via an Investigative ability.
 
 ---
 
@@ -112,18 +124,26 @@ Output the converted scene Markdown with the following structure:
     * [Further details or bullet points related to this event.]
 * **[Another sub-heading]:** [Description of another key event or piece of information.]
 
+### Narrative Elements & Opportunities
+
+[This section is where the LLM can introduce or elaborate on new characters, phenomena, or environmental details that specifically drive investigative opportunities. Think about who or what might offer clues, or present a new challenge that uncovers information. For example, a new NPC who provides a lead, a strange magical effect, or a hidden detail.]
+
+* **[New Element/Character Name, e.g., The Whispering Specter]:** [Briefly describe this element or character and their role in facilitating clue discovery or presenting a new investigative path. This is the space for your ghost, a cryptic inscription, or a unique environmental hazard that reveals information.]
+    * **Purpose:** [Explain *why* this element is in the scene (e.g., 'to provide direct exposition on the ritual steps,' 'to hint at a hidden faction,' 'to create a moral dilemma tied to a clue').]
+    * **Integration:** [How does this element naturally fit into the scene's existing narrative or environment? Does it respond to player actions?]
+
 ### Characters and Adversaries
 
 **[Character Name/Group Name]**
 [Brief descriptive adjectives, e.g., Charming, swashbuckling, sarcastic]
 
-* **Defense - Health:** [Health Threshold, Armor, Health]
-* **Defense - Morale:** [Morale Threshold, Grit, Morale]
+* **Defense - Health:** Health Threshold [num], Armour [num] Health [num]
+* **Defense - Morale:** Morale Threshold [num], Grit [num] Morale [num]
 * **Offense - [Ability, e.g., Warfare, Sway]:** [Modifier; Damage (Weapon/Method)]
 * **Abilities:** [Special abilities or significant Malus]
 * **Special Abilities:** [Unique actions or narrative effects]
 * **Misc:** [Additional notes for the GM about roleplaying or tactics]
-* **Refresh Tokens:** [Number of tokens provided when defeated]
+* **Refresh Tokens:** [Number of tokens provided when defeated - 1 for a mook, 5 for a tough opponent, 7 for a boss]
 
 ### Clues and Leads
 
