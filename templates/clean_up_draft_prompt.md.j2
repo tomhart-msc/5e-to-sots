@@ -5,7 +5,7 @@
 
 ## 🎯 Task: Final Adventure Polish and Introduction Generation
 
-You are an expert adventure editor for *Swords of the Serpentine*. Your task is to review a draft adventure, ensure its narrative consistency across scenes, and write a compelling introduction based on the provided outline and content.
+You are an expert adventure editor for *Swords of the Serpentine*. Your task is to review a draft adventure, ensure its narrative consistency across scenes, and write a compelling, GM-facing introduction, and a conclusion, based on the provided outline and content.
 
 The individual scenes in this draft were generated largely in isolation. It is CRITICAL that you identify and correct any inconsistencies, contradictions, or missing narrative connections between scenes. Pay close attention to:
 * **NPC names and backstories:** Ensure characters remain consistent throughout the entire adventure.
@@ -14,12 +14,23 @@ The individual scenes in this draft were generated largely in isolation. It is C
 * **Overall tone and theme:** Ensure the adventure maintains a consistent feel appropriate for *Swords of the Serpentine*.
 * **Scene numbering:** Ensure scenes are numbered sequentially.
 
-After ensuring consistency, you will write a concise and engaging introduction for the adventure. This introduction should:
-* Be suitable for a Game Master (GM) to read to players at the start of the adventure.
-* Set the scene for the players and establish the initial premise.
-* Hint at the core mystery or conflict without revealing major spoilers or solutions.
-* Be appropriate in length and tone for a *Swords of the Serpentine* adventure.
+After ensuring consistency, you will write a concise and engaging **GM-facing introduction** for the adventure. This introduction **MUST** include the following sections, formatted as top-level markdown headers (`##`), with guidance on their typical length and content:
 
+### Introduction Sections:
+
+* **Adventure Premise:** Describe the core situation, who the main antagonist is, and how the Player Characters (PCs) can get involved. (Typically 1-2 paragraphs)
+    * *Example*: An embittered commoner, Antoni Valori, seeks vengeance against a noble family through dark sorcery, unknowingly manipulated by conspirators. The PCs must stop his plan before it unleashes devastating chaos on Eversink.
+* **Setting:** Specify where in the world the adventure primarily takes place. (Typically 1 paragraph)
+    * *Example*: This adventure takes place in Eversink, primarily within the working-class neighborhood of the Tangle, but starting on a ship approaching the harbor.
+* **Tone:** Detail the overall mood, genre inspirations, and desired emotional experience for the adventure. (Typically 1-2 paragraphs)
+    * *Example*: The adventure should evoke a sense of social horror and political maneuver, rewarding clever players who out-think powerful, well-connected adversaries.
+* **Plot Summary:** Establish what is true at the very start of the adventure, including the main antagonist's plan (if applicable), and clearly define the stakes of the adventure for the PCs and the world. This section should provide the GM with the key background information relevant to the adventure's outset. (Typically 2-4 paragraphs, rich in detail)
+    * **Content Focus:**
+        * The **current state and immediate goals** of the primary antagonist.
+        * The **current activities and motivations** of key supporting characters or factions (e.g., Church of Denari, Mercanti families) as the adventure begins.
+        * The **concrete events or developments** that are *already underway* when the PCs get involved.
+        * A clear articulation of **what will happen if the PCs do nothing**, specifically detailing the immediate negative consequences for the world.
+    * *Example*: Antoni Valori, spurned by his noble grandparents, has succumbed to obsession under the influence of a sorcerous libram and a weak small god, Uxorioth. He is actively in the process of constructing a monstrosity made of corpses to eradicate his bloodline. Donastra, an unprincipled woman, is currently gathering corpses and stolen funerary statues for Antoni, unaware of his extreme ultimate goal, posing as legitimate collectors to avoid suspicion. If the PCs do nothing, within a week Uxorioth’s stall tactics will fail and Antoni will sacrifice someone to power the fleshtangle. He will then unleash the monster, leading to widespread slaughter and potential civil war in Eversink.
 ---
 
 ## Revised Lore
@@ -57,13 +68,13 @@ You are encouraged to invent new details that are fitting to the Swords of the S
 
 ## 🧩 Output Format
 
-Your response MUST be the **entire edited adventure markdown**, starting with the new introduction you write, followed by the corrected and consistent scene content.
+Your response MUST be the **entire edited adventure markdown**, starting with the new GM-facing introduction you write (including the specified sections), followed by the corrected and consistent scene content.
 Finally, write a conclusion section, including the narrative consequences of choices the players make, any Wealth gained per hero (2 per Hero is standard), and Grudges or Favours with any Eversink factions.
 
-**Example Rewards and Penalies**:
-- Help Captain Barani bring the _Squandered Hope_ back to Eversink (unlikely but possible): Wealth 3 per Hero.
-- Kill Antoni: Each Hero adds Grudges: Commoners 1.
-- Lead a public attack on the fleshtangle, and it was destroyed: Each Hero adds Favors: Triskadane 1.
+**Example Rewards and Penalties**:
+* Help Captain Barani bring the _Squandered Hope_ back to Eversink (unlikely but possible): Wealth 3 per Hero.
+* Kill Antoni: Each Hero adds Grudges: Commoners 1.
+* Lead a public attack on the fleshtangle, and it was destroyed: Each Hero adds Favors: Triskadane 1.
 
 **DO NOT include any conversational text, explanations, or YAML blocks in your output.**
 **Simply provide the final, complete, and ready-to-use markdown adventure document.**

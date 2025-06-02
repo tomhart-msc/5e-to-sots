@@ -11,6 +11,28 @@ def response_path(adventure_name: str):
     """
     return Path("work") / f"{prompt_name(adventure_name)}.response.md"
 
+def strip_code_blocks(filename: str):
+    """
+    Removes lines starting with "```" from the input file and
+    saves the result back to the same filename.
+
+    Args:
+        filename (str): The path to the file to be processed.
+    """
+    try:
+        with open(filename, 'r') as f_read:
+            lines = f_read.readlines()
+
+        filtered_lines = [line for line in lines if not line.strip().startswith("```")]
+
+        with open(filename, 'w') as f_write:
+            f_write.writelines(filtered_lines)
+
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' was not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
 def run(pdf: str, draft: str, dry_run: bool = False):
     work_dir = Path("work")
     work_dir.mkdir(exist_ok=True)
@@ -53,4 +75,6 @@ def run(pdf: str, draft: str, dry_run: bool = False):
     )
 
     send_prompt_to_openrouter(prompt_md=prompt_content, prompt_name=prompt_name(adventure_name), dry_run=dry_run)
-        
+    
+    # LLMs don't listen
+    strip_code_blocks(response_path(adventure_name))
