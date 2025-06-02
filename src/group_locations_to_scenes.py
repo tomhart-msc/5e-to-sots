@@ -154,7 +154,11 @@ def run(pdf_path: str, dry_run: bool = False):
     env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template("group_scenes_prompt.md.j2")
 
+    lore_file = f"work/extract_lore_{adventure_name}_prompt.response.md"
+    lore = Path(lore_file).read_text(encoding="utf-8")
+
     prompt = template.render(
+        lore=lore,
         identified_locations=locations_list_for_prompt,
         full_adventure_text=textwrap.indent(full_raw_adventure_text.strip(), "    "),
         system_reference=rules_reference,

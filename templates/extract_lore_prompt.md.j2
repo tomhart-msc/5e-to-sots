@@ -11,12 +11,14 @@ When an 'Adventure Setting' (a specific continental location like "Theocracy of 
 
 {{ world_reference }}
 
+--
+
 {%- if adventure_gm_notes.location %}
 ## Adventure Setting
 
 You **MUST** begin your output by explicitly stating the adventure's primary continental setting as designated here. This setting **OVERWRITES** any implied continental placement from other reference materials (e.g., Eversink for continental placement of *this specific adventure*). You **MUST** then **integrally weave this specified location's lore and characteristics into every relevant aspect of your adaptation.**
 
-{{ adventure_gm_notes.location }}
+This adventure is located in: {{ adventure_gm_notes.location }}
 
 ---
 {%- endif %}
