@@ -35,7 +35,7 @@ def apply_manual_grouping(adventure_name: str) -> Path:
     if not original_locations_path.exists():
         raise FileNotFoundError(f"Original locations file not found at {original_locations_path}. Please run 'extract-locations' command first.")
 
-    manual_notes_path = Path("notes/location_grouping_notes.md")
+    manual_notes_path = Path(f"notes/{adventure_name}_location_grouping_notes.md")
     
     # Load original locations
     with open(original_locations_path, "r", encoding="utf-8") as f:
@@ -184,6 +184,7 @@ def run(pdf_path: str, dry_run: bool = False):
                     
                     scene_number = scene_data.get('scene_number', i + 1)
                     scene_title = scene_data.get('scene_title', f"Untitled Scene {scene_number}")
+                    sanitized_title = scene_title.replace("&", "and")
                     sanitized_title = re.sub(r'[^\w\-_\. ]', '', scene_title).replace(" ", "_").lower()
                     
                     scene_output_path = output_dir / f"scene_{scene_number:02d}_{sanitized_title}.yaml"

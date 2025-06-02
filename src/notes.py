@@ -3,7 +3,7 @@ def load_notes_md(path):
     intent = ""
     allow_invention = False
     current_section = None
-    sections = {"tone": "", "notes": "", "obstacles": "", "allow invention": ""}
+    sections = {"tone": "", "location": "", "notes": "", "obstacles": "", "allow invention": ""}
 
     with open(path, encoding="utf-8") as f:
         for line in f:
@@ -14,12 +14,14 @@ def load_notes_md(path):
                 sections[current_section] += line + "\n"
 
     tone = sections["tone"].strip()
+    location = sections["location"].strip()
     notes = sections["notes"].strip()
     obstacles = sections["obstacles"].strip()
     allow_invention = "yes" in sections["allow invention"].lower()
 
     return {
         "tone": tone or None,
+        "location": location or None,
         "notes": notes or "",
         "obstacles": obstacles or None,
         "allow_invention": allow_invention

@@ -6,12 +6,12 @@
 ## 🎯 Conversion Task
 
 Your primary goal is to transform the provided adventure excerpt into a ***dynamic Swords of the Serpentine scene, prioritizing investigative discovery and narrative consequence***.
-Do not simply translate; adapt the scene to fit SotS's core mechanics where clue discovery is automatic and drives the plot.
+Do not simply translate; adapt and expand the scene to fit SotS's core mechanics where clue discovery is automatic and drives the plot.
 
 For each scene, ensure you:
 - **Identify and elaborate on Core Leads**: These are essential clues that the Heroes must discover to advance the main plot. They are automatically revealed when a relevant Investigative ability is used in context. Think about what information is critical for the Heroes to learn to move to the next logical scene or confront the next challenge.
 - **Integrate Optional Leads: Provide additional, interesting clues that offer deeper insight, reveal side plots, or grant advantages**. These are also automatically revealed but might require more specific or less obvious applications of Investigative abilities.
-- **Focus on the 'Why' of the Clue**: For each clue, clearly state what specific information it reveals and how it connects to the broader adventure or points towards subsequent scenes/NPCs. (e.g., 'Charm (core lead): If she feels like she’s in a position of power, the captain of the Squandered Hope might find a Hero attractive... she’ll reveal secrets to impress them.' )
+- **Focus on the 'Why' of the Clue**: For each clue, clearly state what specific information it reveals and how it connects to the broader adventure or points towards subsequent scenes/NPCs. (e.g., 'Charm (core lead): If she feels like she's in a position of power, the captain of the Squandered Hope might find a Hero attractive... she’ll reveal secrets to impress them.' )
 - **Design for Player Agency**: Ensure the scene presents choices that matter, whether in which clues to pursue, which NPCs to interact with, or how to approach challenges. The discovery of clues should open up new avenues, not just confirm existing suspicions.
 - **Maintain SotS Tone**: Weave in elements of social leverage, ancient secrets, faction politics, and moral ambiguity, as emphasized in the System Summary.
 - **Scene Pacing**: Clearly define the entry and exit conditions for the scene. What needs to happen for the scene to conclude and transition fluidly to the next? (e.g., 'The scene ends once the Heroes have survived the pirate raid and questioned any survivors.' )"
@@ -25,6 +25,14 @@ Use the system and setting reference above to guide your decisions.
 Use the following outline as background context. Refer to it implicitly when interpreting the scene.
 
 {{ adventure_outline.strip() }}
+
+---
+
+## Revised Lore
+
+You **MUST** perform this task consistently with this information mapping the original elements of the adventure to _Swords of the Serpentine_ lore.
+
+{{ lore.strip() }}
 
 ---
 
@@ -98,8 +106,8 @@ When converting D&D-style skill checks, apply the following Swords of the Serpen
 - ❌ Do *not* reference D&D mechanics (e.g., skill names, ability scores, rolls).
 - ✅ Do *not* gate clues behind any rolls. Investigative abilities always succeed.
 - ✅ Use only Swords of the Serpentine mechanics and tone.
-- ✅ General abilities are rolled *only* for risky physical or social actions (TN 4–8+).
-- ✅ "Corruption" is for sensing sorcery’s *effects on the world*, not morality or decay.
+- ✅ General abilities are rolled *only* for risky physical or social actions (TN 4-8+).
+- ✅ "Corruption" is for sensing sorcery's *effects on the world*, not morality or decay.
 
 ---
 
@@ -110,8 +118,8 @@ Output the converted scene Markdown with the following structure:
 ```
 ## Scene [Scene Number]: [Scene Title]
 
-**Scene Type:** [e.g., INTRO, MONTAGE, CORE]
-**Lead-In:** [Previous Scene/Condition, e.g., None, Scene 1]
+**Scene Type:** [e.g., INTRO, MONTAGE, CORE]  
+**Lead-In:** [Previous Scene/Condition, e.g., None, Scene 1]  
 **Lead-Out:** [Next Scene/Condition, e.g., Scene 2, Scene 4]
 
 ### Opening the Scene
@@ -134,16 +142,41 @@ Output the converted scene Markdown with the following structure:
 
 ### Characters and Adversaries
 
-**[Character Name/Group Name]**
-[Brief descriptive adjectives, e.g., Charming, swashbuckling, sarcastic]
+### [Character or Adversary Name]
+**Adjectives**: [comma-separated adjectives]
 
-* **Defense - Health:** Health Threshold [num], Armour [num] Health [num]
-* **Defense - Morale:** Morale Threshold [num], Grit [num] Morale [num]
-* **Offense - [Ability, e.g., Warfare, Sway]:** [Modifier; Damage (Weapon/Method)]
-* **Abilities:** [Special abilities or significant Malus]
-* **Special Abilities:** [Unique actions or narrative effects]
-* **Misc:** [Additional notes for the GM about roleplaying or tactics]
-* **Refresh Tokens:** [Number of tokens provided when defeated - 1 for a mook, 5 for a tough opponent, 7 for a boss]
+**Health Defense**
+- Threshold: <number>
+- Armour: <number>
+- Health: <number>
+
+**Morale Defense**
+- Threshold: <number>
+- Grit: <number>
+- Morale: <number>
+
+**Attacks**
+- Warfare: +X; Damage Modifier +Y (weapon or method)
+- Sorcery: +X; Damage Modifier +Y (sphere or effect)
+- Sway: +X; Damage Modifier +Y (tone or method)
+
+**Abilities**
+- Malus: <number>
+- Investigative: <optional, if any>
+- General: <optional, if any>
+
+**Special Abilities**
+- <Name> (cost <N>)
+- ...
+
+**Misc**
+- Alertness Modifier: <optional>
+- Stealth Modifier: <optional>
+- Other: <any unique notes>
+
+**Refresh Tokens**: <1, 3, 5, or 7>
+
+**Description**: [Brief narrative description of who they are and their role]
 
 ### Clues and Leads
 

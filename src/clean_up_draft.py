@@ -1,8 +1,7 @@
 # src/clean_up_draft.py
 from pathlib import Path
-import textwrap
 from jinja2 import Environment, FileSystemLoader
-from src.llm_utils import send_prompt_to_openrouter # Assuming this utility exists
+from src.llm_utils import send_prompt_to_openrouter
 from src.notes import load_notes_md
 
 PROMPT_HEADER = """You are an expert adventure editor for Swords of the Serpentine."""
@@ -53,8 +52,10 @@ def run(draft: str, adventure_outline: str, dry_run: bool = False):
         print(f"Error: Could not read input files. {e}")
         return None
 
-    adventure_notes_file = Path("notes/adventure_notes.md")
+    adventure_notes_file = Path(f"notes/{adventure_name}_adventure_notes.md")
     adventure_gm_notes = load_notes_md(adventure_notes_file) if adventure_notes_file.exists() else {}
+    lore_file = f"work/extract_lore_{adventure_name}_prompt.response.md"
+    lore = Path(lore_file).read_text(encoding="utf-8")
 
     # Indent content to prevent markdown parsing issues with nested blocks
     # This ensures the content is treated as literal text within the prompt,
@@ -66,6 +67,7 @@ def run(draft: str, adventure_outline: str, dry_run: bool = False):
     env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template("clean_up_draft_prompt.md.j2")
     prompt_content = template.render(
+        lore=lore,
         system_reference=system_reference,
         setting_reference=setting_reference,
         adventure_gm_notes=adventure_gm_notes,

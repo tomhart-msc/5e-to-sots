@@ -1,5 +1,8 @@
 # Adventure Notes
 
+## Location
+An island in the Bay of Coins outside Eversink
+
 ## Tone
 A mysterious tower of an ancient god, holy but corrupted.
 

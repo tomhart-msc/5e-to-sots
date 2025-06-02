@@ -7,10 +7,17 @@ from src import convert_scene
 from src import convert_adventure
 from src import summarize_adventure
 from src import clean_up_draft
+from src import revise_adversaries
+from src import extract_lore
 
 def main():
     parser = argparse.ArgumentParser(description="Convert D&D 5e adventures into Swords of the Serpentine format.")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # NEW: extract-lore
+    parser_extract_lore = subparsers.add_parser("extract-lore", help="Extract lore from a PDF adventure and adapt to SOTS")
+    parser_extract_lore.add_argument("--pdf", required=True, help="Path to PDF")
+    parser_extract_lore.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
 
     # extract-structure
     parser_extract = subparsers.add_parser("extract-structure", help="Extract adventure structure from a PDF")
@@ -35,6 +42,7 @@ def main():
 
     parser_convert_scene = subparsers.add_parser("convert-scene", help="Generate a scene conversion prompt")
     parser_convert_scene.add_argument("--scene", required=True, help="Path to scene YAML file (e.g., work/ADVENTURE_NAME_scenes/scene_01_*.yaml)")
+    parser_convert_scene.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
     parser_convert_scene.add_argument("--adventure-outline", help="Path to adventure outline Markdown file (optional)")
     parser_convert_scene.add_argument("--notes", help="Path to GM notes Markdown file (optional)")
     parser_convert_scene.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
@@ -54,9 +62,17 @@ def main():
     clean_up_draft_parser.add_argument("--adventure-outline", required=True, help="Path to the adventure outline markdown file.")
     clean_up_draft_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
 
+    revise_adversaries_parser = subparsers.add_parser("revise-adversaries", help="Cleans up the adversaries")
+    revise_adversaries_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
+    revise_adversaries_parser.add_argument("--draft", required=True, help="Path to the combined draft markdown file.")
+    revise_adversaries_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
+
     args = parser.parse_args()
 
-    if args.command == "extract-structure":
+    if args.command == "extract-lore":
+        dry_run = args.dry_run
+        extract_lore.run(pdf_path=args.pdf, dry_run=dry_run)
+    elif args.command == "extract-structure":
         dry_run = args.dry_run
         extract_structure.run(pdf_path=args.pdf, dry_run=dry_run)
     elif args.command == "extract-locations":
@@ -69,7 +85,7 @@ def main():
         extract_adversaries.run(markdown_path=args.markdown)
     elif args.command == "convert-scene":
         dry_run = args.dry_run
-        convert_scene.run(scene_path=args.scene, adventure_outline_path=args.adventure_outline, notes_path=args.notes, dry_run=dry_run)
+        convert_scene.run(scene_path=args.scene, pdf_path=args.pdf, adventure_outline_path=args.adventure_outline, notes_path=args.notes, dry_run=dry_run)
     elif args.command == "convert-adventure":
         dry_run = args.dry_run
         convert_adventure.run(adventure_path=args.adventure, notes_path=args.notes)
@@ -78,6 +94,9 @@ def main():
         summarize_adventure.run(pdf_path=args.pdf, dry_run=dry_run) # Updated to pass pdf_path
     elif args.command == "clean-up-draft":
         clean_up_draft.run(args.draft, args.adventure_outline, args.dry_run)
+    elif args.command == "revise-adversaries":
+        dry_run = args.dry_run
+        revise_adversaries.run(args.pdf, args.draft, dry_run=dry_run)
     else:
         parser.print_help()
         return 1

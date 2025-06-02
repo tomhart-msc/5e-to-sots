@@ -45,6 +45,14 @@ def main():
         return 1
     adventure_name = input_pdf.stem
 
+    lore_md = response_funcs["extract_lore"](input_pdf)
+    if not lore_md.exists():
+        run_cmd(["./convert.py", "extract-lore", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
+    
+    if not lore_md.exists():
+        print(f"Error: {lore_md} not found.")
+        return 1
+
     # Step 1: Extract structure
     structure_md = response_funcs["extract_structure"](input_pdf)
     if not structure_md.exists():
@@ -92,11 +100,13 @@ def main():
     scene_dir = Path("work") / Path(f"{adventure_name}_scenes")
     notes_dir = Path("notes")
     for scene_file in sorted(scene_dir.glob("scene_*.yaml")):
-        scene_name = scene_file.stem  # e.g., "scene_03"
-        notes_file = notes_dir / f"{scene_name}_notes.md"
+        scene_stem = scene_file.stem
+        parts = scene_stem.split('_', 2)
+        scene_name = f"{parts[0]}_{parts[1]}"  # e.g., "scene_03"
+        notes_file = notes_dir / f"{adventure_name}_{scene_name}_notes.md"
         scene_summary_md = response_funcs["convert_scene"](scene_file)
         if not scene_summary_md.exists():
-            cmd = ["./convert.py", "convert-scene", "--scene", str(scene_file), "--adventure-outline", str(summary_md)]
+            cmd = ["./convert.py", "convert-scene", "--scene", str(scene_file), "--pdf", str(input_pdf), "--adventure-outline", str(summary_md)]
             if notes_file.exists():
                 cmd += ["--notes", str(notes_file)]
             if args.dry_run:
@@ -113,14 +123,25 @@ def main():
                 outfile.write("\n\n")
 
     # Ensure consistency between scenes
-    final_md = Path(f"work/{adventure_name}_final.md")
-    if not final_md.exists():
+    consistent_md = response_funcs["clean_up_draft"](adventure_name)
+    if not consistent_md.exists():
         run_cmd(["./convert.py", "clean-up-draft", "--draft", str(combined_md), "--adventure-outline", str(structure_md)] + (["--dry-run"] if args.dry_run else []))
 
-    if not final_md.exists():
-        print(f"Error: {final_md} not found.")
+    if not consistent_md.exists():
+        print(f"Error: {consistent_md} not found.")
         return 1
     
+    # Clean up adversaries
+    revised_adversaries_md = response_funcs["revise_adversaries"](adventure_name)
+    if not revised_adversaries_md.exists():
+        run_cmd(["./convert.py", "revise-adversaries", "--pdf", str(input_pdf), "--draft", str(consistent_md)] + (["--dry-run"] if args.dry_run else []))
+
+    if not revised_adversaries_md.exists():
+        print(f"Error: {revised_adversaries_md} not found.")
+        return 1
+
+    # Finally, format the PDF
+    final_md = revised_adversaries_md
     pdf_output = Path(f"work/{adventure_name}_final.pdf")
     run_cmd(["pandoc", str(final_md), "-o", str(pdf_output), "--pdf-engine", "weasyprint"])
     print(f"PDF created at {pdf_output}")
