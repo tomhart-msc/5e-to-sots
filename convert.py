@@ -9,6 +9,9 @@ from src import summarize_adventure
 from src import clean_up_draft
 from src import revise_adversaries
 from src import extract_lore
+from src import create_introduction
+from src import create_conclusion
+from src import convert_adversaries
 
 def main():
     parser = argparse.ArgumentParser(description="Convert D&D 5e adventures into Swords of the Serpentine format.")
@@ -36,8 +39,7 @@ def main():
     parser_group_scenes.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
 
     parser_adversaries = subparsers.add_parser("extract-adversaries", help="Extract D&D stat blocks from adventure markdown")
-    parser_adversaries.add_argument("--markdown", required=True, help="Path to adventure .md")
-    parser_adversaries.add_argument("--output-prompt", action="store_true", help="Output prompt for LLM")
+    parser_adversaries.add_argument("--pdf", required=True, help="Path to the original PDF (for raw text context)")
     parser_adversaries.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
 
     parser_convert_scene = subparsers.add_parser("convert-scene", help="Generate a scene conversion prompt")
@@ -67,6 +69,20 @@ def main():
     revise_adversaries_parser.add_argument("--draft", required=True, help="Path to the combined draft markdown file.")
     revise_adversaries_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
 
+    create_introduction_parser = subparsers.add_parser("create-introduction", help="Writes an introduction for the adventure")
+    create_introduction_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
+    create_introduction_parser.add_argument("--draft", required=True, help="Path to the combined draft markdown file.")
+    create_introduction_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
+
+    create_conclusion_parser = subparsers.add_parser("create-conclusion", help="Writes a conclusion for the adventure")
+    create_conclusion_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
+    create_conclusion_parser.add_argument("--draft", required=True, help="Path to the combined draft markdown file.")
+    create_conclusion_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
+
+    convert_adversaries_parser = subparsers.add_parser("convert-adversaries", help="Convert NPCs and adversaries for the adventure")
+    convert_adversaries_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
+    convert_adversaries_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
+
     args = parser.parse_args()
 
     if args.command == "extract-lore":
@@ -82,7 +98,8 @@ def main():
         dry_run = args.dry_run
         group_locations_to_scenes.run(pdf_path=args.pdf, dry_run=dry_run)
     elif args.command == "extract-adversaries":
-        extract_adversaries.run(markdown_path=args.markdown)
+        dry_run = args.dry_run
+        extract_adversaries.run(args.pdf, dry_run=dry_run)
     elif args.command == "convert-scene":
         dry_run = args.dry_run
         convert_scene.run(scene_path=args.scene, pdf_path=args.pdf, adventure_outline_path=args.adventure_outline, notes_path=args.notes, dry_run=dry_run)
@@ -97,6 +114,15 @@ def main():
     elif args.command == "revise-adversaries":
         dry_run = args.dry_run
         revise_adversaries.run(args.pdf, args.draft, dry_run=dry_run)
+    elif args.command == "create-introduction":
+        dry_run = args.dry_run
+        create_introduction.run(args.pdf, args.draft, dry_run=dry_run)
+    elif args.command == "create-conclusion":
+        dry_run = args.dry_run
+        create_conclusion.run(args.pdf, args.draft, dry_run=dry_run)
+    elif args.command == "convert-adversaries":
+        dry_run = args.dry_run
+        convert_adversaries.run(args.pdf, dry_run=dry_run)
     else:
         parser.print_help()
         return 1

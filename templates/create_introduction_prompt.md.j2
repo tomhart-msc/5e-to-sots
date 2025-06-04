@@ -1,0 +1,86 @@
+{{ setting_reference }}
+
+--
+
+{{ world_reference }}
+
+---
+
+## 🧠 GM Intent
+
+{%- if adventure_gm_notes.tone %}
+**Tone:** {{ adventure_gm_notes.tone }}
+{%- endif %}
+{%- if adventure_gm_notes.obstacles %}
+**Obstacles:** {{ adventure_gm_notes.obstacles }}
+{%- endif %}
+{%- if adventure_gm_notes.notes %}
+**Notes:**
+{{ adventure_gm_notes.notes.strip() }}
+{%- endif %}
+
+---
+
+## 🔁 Lore Conversion Notes
+
+You MUST adhere to the following lore mappings and replacements. This ensures consistency with the *Swords of the Serpentine* setting.
+
+{{ lore.strip() }}
+
+---
+
+## 🎯 TASK: Write a GM-Facing Adventure Introduction
+
+You are a professional adventure designer writing for **Swords of the Serpentine**. Your job is to write a compelling, professional **GM-facing introduction** to the adventure content below.
+
+Carefully analyze the adventure content and use the required section headers and formats listed below.
+
+### ✳️ REQUIRED OUTPUT FORMAT
+
+Your final output MUST include the following sections, written in **Markdown** using `##` headers:
+
+---
+
+# Title
+A one-line snappy title of the adventure, reflecting the content.
+
+---
+
+A one-paragraph description of what the adventure is about.
+
+---
+
+## Adventure Premise  
+1–2 paragraphs describing the **core situation**, the **main antagonist**, and how the PCs may get involved.
+
+---
+
+## Setting  
+1 paragraph describing **where** the adventure takes place in the world.
+
+---
+
+## Tone  
+1–2 paragraphs detailing the **emotional feel**, **genre inspirations**, and the **mood** the GM should bring to the game.
+
+---
+
+## Plot Summary  
+2–4 paragraphs summarizing the truth behind the adventure. Include:
+
+- The **main antagonist's goal and plan**.
+- The **supporting characters’** current actions and motivations.
+- Any **important developments** already underway.
+- What will happen **if the PCs do nothing**.
+
+---
+
+### ❌ DO NOT:
+- Do **not** repeat or summarize the input adventure content directly.
+- Do **not** include YAML, extra commentary, or any explanation.
+- Do **not** include "!!!!! BEGIN ADVENTURE CONTENT !!!!!!"
+
+---
+
+!!!!! BEGIN ADVENTURE CONTENT !!!!!!
+{{ draft_content.strip() }}

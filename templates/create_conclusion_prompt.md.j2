@@ -1,0 +1,54 @@
+{{ setting_reference }}
+
+--
+
+{{ world_reference }}
+
+---
+
+## 🎯 Task: Introduction Generation
+
+You are an expert adventure writer for *Swords of the Serpentine*. Your task is to review a draft adventure and write a compelling, **GM-facing conclusion**, based on the provided outline and content.
+
+This conclusion describes the narrative consequences of choices the players make, any Wealth gained per hero (2 per Hero is standard), and Grudges or Favours with any Eversink factions.
+
+**Example Rewards and Penalties**:
+* Help Captain Barani bring the _Squandered Hope_ back to Eversink (unlikely but possible): Wealth 3 per Hero.
+* Kill Antoni: Each Hero adds Grudges: Commoners 1.
+* Lead a public attack on the fleshtangle, and it was destroyed: Each Hero adds Favors: Triskadane 1.
+
+Everything after "!!!!! BEGIN ADVENTURE CONTENT !!!!!!" is the adventure content.
+
+---
+
+## Revised Lore
+
+You **MUST** perform this task consistently with this information mapping the original elements of the adventure to _Swords of the Serpentine_ lore.
+
+{{ lore.strip() }}
+
+---
+
+## 🧠 GM Intent
+
+{%- if adventure_gm_notes.tone %}
+Tone: {{ adventure_gm_notes.tone }}
+{%- endif %}
+{%- if adventure_gm_notes.obstacles %}
+Obstacles: {{ adventure_gm_notes.obstacles }}
+{%- endif %}
+{%- if adventure_gm_notes.notes %}
+Notes:
+{{ adventure_gm_notes.notes.strip() }}
+{%- endif %}
+
+---
+
+## 🧩 Output Format
+
+Your response MUST be the the new GM-facing conclusion you write, in markdown.
+
+**Another step will append this conclusion VERBATIM to the adventure, so DO NOT include any conversational text, explanations, or YAML blocks in your output.**
+
+!!!!! BEGIN ADVENTURE CONTENT !!!!!!
+{{ draft_content.strip() }}

@@ -6,6 +6,10 @@ An island in the Bay of Coins outside Eversink
 ## Tone
 A mysterious tower of an ancient god, holy but corrupted.
 
+## Default Culture
+
+Egyptian
+
 ## Notes
 
 - The Spire of the Sun God (Aten) is located on an island in the Bay of Coins: close to Eversink, but outside it.

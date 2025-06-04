@@ -1,0 +1,72 @@
+## 🎯 Task: Extract Named NPCs, Adversaries, and Encountered Creatures
+
+You are analyzing an adventure module to extract **distinct adversaries, NPCs, and monster types**. Everything after the line "!!!!! BEGIN ADVENTURE CONTENT !!!!!" is the adventure text.
+
+Your objective is to return a YAML list of **all explicitly mentioned** named characters, creature types, and enemy groups that:
+- Play a narrative or mechanical role in the adventure (e.g., interact with the PCs, serve as enemies or allies, or appear in encounters).
+- Are described with names, types, or roles.
+- Appear in a stat block, room description, or encounter text.
+
+⚠️ **Do not invent entities**. Only extract those that are **explicitly described or referenced**.
+
+### ✅ Include:
+- Named characters (e.g., "Ramag", "Heknusret the Temerarious").
+- Clearly labeled groups or factions (e.g., "Coil of Memory assassins").
+- Distinct creature types, especially if described or given stats (e.g., "baboons", "gilded apostate").
+- Any named creature or monster from a stat block or sourcebook reference (e.g., "chort devil (Tome of Beasts, p. 104)").
+
+### ❌ Do *not* include:
+- Generic terms like "guards" or "undead" unless uniquely identified (e.g., “ashen undead of the Serpentine Empire”).
+- Non-encountered or unnamed creatures with no role or mechanics described.
+- Entities you infer, extrapolate, or imagine.
+
+---
+
+## 🧩 Output Format
+
+Return a single YAML list with the following structure:
+
+```yaml
+npcs_adversaries_monsters:
+  - name: <Name or creature type>
+    level: <Threat level>
+    description_text: |
+      <Exact quote(s) from the adventure that describe this entity.>
+```
+
+The level field **MUST** be one of the following: non-combatant, mook, standard, major, boss.
+
+The description_text **MUST** be **copied verbatim** from the adventure, with no added explanation.
+
+Include **all relevant lines** that provide role, stats, affiliations, motivations, or appearance.
+
+If an entity is described in multiple sections, include all of its relevant quotes in a single description_text block.
+
+### 🧪 Example Output
+
+```
+npcs_adversaries_monsters:
+  - name: Deva
+    level: major
+    description_text: |
+      A successful DC 15 Intelligence (History or Religion) check reveals that the statue of cast bronze depicts a deva, specifically Af, a herald of the Sun God.
+      
+      Should anyone defile or desecrate the sanctuary in any fashion, a deva appears, pronounces punishment upon them for their sacrilege, and attacks. It fights until death, its own or the PCs, or until the PCs flee the tower. If they flee, it returns to its home plane.
+
+  - name: Chort Devil
+    level: standard
+    description_text: |
+      Trapped in the amber above, frozen as if in the act of tumbling down the stairs, is a devilish-looking creature with curved horns, a pig-like snout, and shaggy-furred goat legs.
+
+      However, this also frees the chort devil (Tome of Beasts, p. 104) that was trapped there. It attacks the PCs when freed.
+
+  - name: Gilded Apostate
+    level: boss
+    description_text: |
+      This is the prison of the former high priest of the Sun God, punished for betraying his oaths and allowing corruption to nearly destroy this sanctuary. For losing his faith to greed, he was transformed into a gilded apostate (see below), then wrapped in chains of silver to bind and burn him during his imprisonment.
+```
+
+---
+
+!!!!! BEGIN ADVENTURE CONTENT !!!!!!
+{{ draft_content.strip() }}

@@ -13,28 +13,59 @@ You **MUST** perform this task consistently with this information mapping the or
 ---
 ## 🎯 Task: Revise Adversaries
 
-You are an expert editor for *Swords of the Serpentine*, a game of cunning, corruption, and sorcery set in a city of secrets and shadows. Your task is to revise the adversaries in the following adventure:
+You are an expert editor for *Swords of the Serpentine*, a game of cunning, corruption, and sorcery set in a city of secrets and shadows. Your task is to revise the adversaries within the adventure content provided *after the "!!!!! BEGIN ADVENTURE CONTENT !!!!!!" marker*.
 
 - Ensure each adversary's mechanics are coherent and consistent with their narrative role.
-- Scale power level to match the story: a demon should terrify; a footpad should bleed.
+- Scale power level to match the story: a demon should terrify; a footpad should bleed. **Actively adjust** numerical values (Threshold, Health, Armour, Grit, Morale) to match the `Adversary Stat Guidelines` provided below.
 - Use abilities that reinforce genre themes of ancient sorcery, treachery, dread, and decadence.
+- **For each adversary, you MUST actively TRANSFORM D&D-specific abilities and terms into their *Swords of the Serpentine* equivalents.** This means **rewriting** them completely.
+    - **Example Transformation 1:** Instead of "Legendary Resistance (3/day)", consider abilities like "Warded (cost 6)" or "Defense Boost (cost 6)" from the `Revised Special Abilities Reference`, describing their resilience narratively.
+    - **Example Transformation 2:** Instead of "Greedy Gaze (reaction, DC 16 Wisdom)", describe a narrative consequence or link it to a Morale/Health Threshold for a General Ability roll (e.g., "Target loses 2 Morale unless they succeed on a Morale (TN 6) roll"). Avoid "DC" or "saving throw" entirely.
+    - **Example Transformation 3:** For "Liar's Largesse (cost 2): Auto-succeed on a Charm roll.", **rephrase this entirely.** Remember, Investigative Abilities like Charm are *never* rolled. This ability should instead provide a narrative benefit, such as "Liar's Largesse (cost 2): The merchant's words weave a narrative so convincing that targets treat them as a close friend for a scene, unless they take Morale damage."
 - Make each adversary feel like a **singular threat**, not one of a type.
 - Avoid generic or over-explained monsters. Omit encyclopedic bestiary logic.
 - Favor *implication* and *atmosphere*: many monstrous foes should be felt before they are seen.
 - Reposition foes in scenes if necessary—e.g., an ambush at night, a whispered warning before violence.
 - **NEVER** introduce D&D terminology like "saves"/"saving throws", damage types, etc. Phrase adversary abilities in terms of _Swords of the Serpentine_ mechanics.
+- **NEVER use specific creature names from other fantasy systems** (e.g., "Goblin", "Beholder", "Chort Devil"). Instead, describe them narratively and uniquely (e.g., "minor demon", "winged horror", "corrupted cultist", "imp", "a lingering spiritual wound").
 
 Do **not** flatten pulp tone into high fantasy or game balance. Let fear, mystery, and dramatic flair shape what adversaries can do.
 
-You MUST revise only the content inside <!-- START_ADVENTURE --> and <!-- END_ADVENTURE -->. Preserve all other text exactly, including section headers and formatting.
+Your final output MUST be the **entire original markdown document structure**, with the `## 📖 Draft Adventure Content` section replaced by the **revised** adversary content.
 
 ---
 
-## 📖 Draft Adventure Content
+## 📊 Adversary Stat Guidelines
 
-<!-- START_ADVENTURE -->
-{{ draft_content.strip() }}
-<!-- END_ADVENTURE -->
+When assigning numerical values for Health Defense and Morale Defense, use the following guidelines to ensure appropriate power scaling within _Swords of the Serpentine_. **You MUST use these ranges to replace existing values in the draft content.**
+
+* **Minions/Minor Foes (e.g., Cultist, Footpad):**
+    * Threshold: 3-4
+    * Armour: 0-1
+    * Health: 4-6
+    * Grit: 1-2
+    * Morale: 5-7
+
+* **Standard Foes (e.g., Guard Captain, Minor Sorcerer):**
+    * Threshold: 4-5
+    * Armour: 1-2
+    * Health: 7-9
+    * Grit: 2-3
+    * Morale: 8-10
+
+* **Major Threats (e.g., Veteran Assassin, Lesser Demon):**
+    * Threshold: 5-6
+    * Armour: 2-3
+    * Health: 10-12
+    * Grit: 3-4
+    * Morale: 10-12
+
+* **Bosses/Climactic Foes (e.g., Corrupted Priest, Ancient Horror):**
+    * Threshold: 6-7 (rarely 8 for truly invincible foes, e.g., for The Gilded Apostate, aim for Threshold 7)
+    * Armour: 3-5
+    * Health: 13-16 (rarely 18, which is effectively invincible. For The Gilded Apostate, aim for Health 16)
+    * Grit: 4-5
+    * Morale: 13-16
 
 ---
 
@@ -42,10 +73,11 @@ You MUST revise only the content inside <!-- START_ADVENTURE --> and <!-- END_AD
 
 This is **not** a D&D adventure. You **MUST NOT** use D&D-specific terms like:
 
-- “DC”, “saving throw”, “attack roll”
-- Dice notations like “1d6+3”
-- Damage types like “radiant”, “necrotic”, “force”, or “non-magical”
-- D&D monster archetypes or language (e.g., “challenge rating”, “undead immunity”, “resistance”)
+-   “DC”, “saving throw”, “attack roll”
+-   Dice notations like “1d6+3”
+-   Damage types like “radiant”, “necrotic”, “force”, or “non-magical”
+-   D&D monster archetypes or language (e.g., “challenge rating”, “undead immunity”, “resistance”)
+-   **Explicitly for abilities: Do not phrase abilities using "roll" for Investigative Abilities.** For example, instead of "Charm roll," describe the narrative effect or state a target's Morale/Health Threshold if a General ability is required.
 
 _Swords of the Serpentine_ uses narrative, flexible rules: emphasize fiction, tone, and story role instead of math or classificatio
 
@@ -53,7 +85,7 @@ _Swords of the Serpentine_ uses narrative, flexible rules: emphasize fiction, to
 
 ## 🧩 Output Format
 
-Your response MUST be the **entire edited adventure markdown**, with all adversaries revised.
+Your response MUST be the **entire original markdown document structure**, exactly as provided below the "!!!!! BEGIN ADVENTURE CONTENT !!!!!!" marker, but with all adversaries replaced by your **fully revised adversary markdown blocks**.
 
 All adversaries **must** be formatted in the following style (no YAML, no bullet substitutions, no summaries):
 
@@ -94,5 +126,8 @@ All adversaries **must** be formatted in the following style (no YAML, no bullet
 
 **Description**: [Brief narrative description of who they are and their role]
 
-**DO NOT include any conversational text, explanations, or code blocks in your output.**
+**DO NOT include any conversational text, explanations, or code blocks in your output outside of the markdown structure.**
 **Simply provide the final, complete, and ready-to-use markdown adventure document.**
+
+!!!!! BEGIN ADVENTURE CONTENT !!!!!!
+{{ draft_content.strip() }}

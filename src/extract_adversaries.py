@@ -1,38 +1,32 @@
 from pathlib import Path
-import textwrap
+from jinja2 import Environment, FileSystemLoader
+from src.text_utils import extract_pdf_text, strip_code_blocks
+from src.llm_utils import send_prompt_to_openrouter
 
-PROMPT = """You are extracting adversary stat blocks from a Dungeons & Dragons 5E adventure.
+STEP_NAME="extract_adversaries"
 
-Your task is to identify all monsters, unique enemies, or notable NPCs with stats from the input text, and output each as a structured YAML block. Include only adversaries that have mechanical relevance.
+def prompt_name(adventure_name: str):
+    return f"{STEP_NAME}_{adventure_name}_prompt"
 
-For each adversary, output a YAML block with:
-- `name`
-- `type` (e.g., fiend, humanoid, celestial)
-- `challenge_rating`
-- `hit_points`
-- `armor_class`
-- `abilities`: a dictionary of STR, DEX, CON, INT, WIS, CHA
-- `special_traits`: short description of any special powers
-- `actions`: key attacks or abilities used in combat
+def response_path(adventure_name: str):
+    """
+    Returns the path to the raw LLM response file for the step.
+    """
+    return Path("work") / f"{prompt_name(adventure_name)}.response.md"
 
-Do not invent missing details. If any information is not given in the input, omit the field.
+def run(pdf: str, dry_run: bool = False):
+    work_dir = Path("work")
+    work_dir.mkdir(exist_ok=True)
 
-Return only YAML. No explanations or preamble.
-"""
+    pdf_path = Path(pdf)
+    adventure_name = pdf_path.stem
 
-def run(markdown_path: str, output_path: Path = None):
-    md_path = Path(markdown_path)
-    input_name = md_path.stem
-    text = md_path.read_text(encoding="utf-8")
+    # Render Jinja2 template for the prompt
+    env = Environment(loader=FileSystemLoader("templates"))
+    template = env.get_template(f"{STEP_NAME}_prompt.md.j2")
+    prompt_content = template.render(
+        draft_content=extract_pdf_text(pdf_path)
+    )
 
-    prompt = [PROMPT, "\n\n### Adventure Text:\n\n", textwrap.indent(text.strip(), "    ")]
-
-    if output_path is None:
-        output_path = Path("input") / f"{input_name}_adversaries.md"
-        output_path.parent.mkdir(exist_ok=True)
-
-    output_path.write_text("\n\n".join(prompt), encoding="utf-8")
-    print(f"Prompt written to {output_path}")
-    print("Paste into the LLM of your choice to extract D&D stat blocks as YAML.")
-
-
+    send_prompt_to_openrouter(prompt_md=prompt_content, prompt_name=prompt_name(adventure_name), dry_run=dry_run)
+    strip_code_blocks(response_path(adventure_name))

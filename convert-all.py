@@ -32,6 +32,11 @@ def run_cmd(args):
     print("Running:", " ".join(str(arg) for arg in args))
     subprocess.run(args, check=True)
 
+def ensure_exists(filename):
+    if not filename.exists():
+        print(f"Error: {filename} not found.")
+        sys.exit(1)
+    
 def main():
     response_funcs = import_response_path_functions()
     parser = argparse.ArgumentParser(description="Convert a 5E adventure PDF into Swords of the Serpentine format.")
@@ -131,17 +136,37 @@ def main():
         print(f"Error: {consistent_md} not found.")
         return 1
     
-    # Clean up adversaries
-    revised_adversaries_md = response_funcs["revise_adversaries"](adventure_name)
-    if not revised_adversaries_md.exists():
-        run_cmd(["./convert.py", "revise-adversaries", "--pdf", str(input_pdf), "--draft", str(consistent_md)] + (["--dry-run"] if args.dry_run else []))
+    # Create introduction
+    introduction_md = response_funcs["create_introduction"](adventure_name)
+    if not introduction_md.exists():
+        run_cmd(["./convert.py", "create-introduction", "--pdf", str(input_pdf), "--draft", str(consistent_md)] + (["--dry-run"] if args.dry_run else []))
+        ensure_exists(introduction_md)
 
-    if not revised_adversaries_md.exists():
-        print(f"Error: {revised_adversaries_md} not found.")
-        return 1
+    # Create conclusion
+    conclusion_md = response_funcs["create_conclusion"](adventure_name)
+    if not conclusion_md.exists():
+        run_cmd(["./convert.py", "create-conclusion", "--pdf", str(input_pdf), "--draft", str(consistent_md)] + (["--dry-run"] if args.dry_run else []))
+        ensure_exists(conclusion_md)
+
+    # Combine the sections
+    final_md = Path(f"work/{adventure_name}_final.md")
+    with open(final_md, "w") as outfile:
+        for file in [introduction_md, consistent_md, conclusion_md]:
+            with open(file, "r") as infile:
+                outfile.write(infile.read())
+                outfile.write("\n\n")
+
+    # Clean up adversaries
+    # revised_adversaries_md = response_funcs["revise_adversaries"](adventure_name)
+    # if not revised_adversaries_md.exists():
+    #    run_cmd(["./convert.py", "revise-adversaries", "--pdf", str(input_pdf), "--draft", str(consistent_md)] + (["--dry-run"] if args.dry_run else []))
+    # 
+    # if not revised_adversaries_md.exists():
+    #     print(f"Error: {revised_adversaries_md} not found.")
+    #     return 1
 
     # Finally, format the PDF
-    final_md = revised_adversaries_md
+    final_md = final_md
     pdf_output = Path(f"work/{adventure_name}_final.pdf")
     run_cmd(["pandoc", str(final_md), "-o", str(pdf_output), "--pdf-engine", "weasyprint"])
     print(f"PDF created at {pdf_output}")
