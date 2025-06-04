@@ -43,6 +43,17 @@ These clues, when interpreted, allow players to deduce the solution (sword with 
 - **Maintain SotS Tone**: Weave in elements of social leverage, ancient secrets, faction politics, and moral ambiguity, as emphasized in the System Summary.
 - **Scene Pacing**: Clearly define the entry and exit conditions for the scene. What needs to happen for the scene to conclude and transition fluidly to the next? (e.g., 'The scene ends once the Heroes have survived the pirate raid and questioned any survivors.' )"
 
+You **MUST** rename all adversaries and NPCs wherever they appear, including in narration, clue descriptions, interactions, and summaries, according to this table:
+{{ adversaries_table }}
+**NEVER** refer to the original name.
+
+You **MUST** rename all magical items wherever they appear, including in narration, clue descriptions, interactions, and summaries, according to this table:
+{{ gear_table }}
+**NEVER** refer to the original name.
+
+You are strictly forbidden from reproducing any D&D stat blocks or mechanics. Do not summarize or translate them either. Describe the creature only narratively, using Swords of the Serpentine terminology, and leave game statistics entirely to the GM.
+You **MUST** rename the NPCs and adversaries in the conversion according to this table:
+
 ---
 
 ## 🧠 How to Replace D&D-Style Skill Checks
@@ -164,43 +175,11 @@ Output the converted scene Markdown with the following structure:
 
 ### Characters and Adversaries
 
-<!-- BEGIN_ADVERSARY -->
-### [Character or Adversary Name]
-**Adjectives**: [comma-separated adjectives]
-
-**Health Defense**
-- Threshold: <number>
-- Armour: <number>
-- Health: <number>
-
-**Morale Defense**
-- Threshold: <number>
-- Grit: <number>
-- Morale: <number>
-
-**Attacks**
-- Warfare: +X; Damage Modifier +Y (weapon or method)
-- Sorcery: +X; Damage Modifier +Y (sphere or effect)
-- Sway: +X; Damage Modifier +Y (tone or method)
-
-**Abilities**
-- Malus: <number>
-- Investigative: <optional, if any>
-- General: <optional, if any>
-
-**Special Abilities**
-- <Name> (cost <N>)
-- ...
-
-**Misc**
-- Alertness Modifier: <optional>
-- Stealth Modifier: <optional>
-- Other: <any unique notes>
-
-**Refresh Tokens**: <1, 3, 5, or 7>
-
-**Description**: [Brief narrative description of who they are and their role]
-<!-- END_ADVERSARY -->
+[List the NPCs and Adversaries in this section, along with the role of each. Do not include any statistics.]
+Example:
+* **Brother Enzo**, a priest of Denari who witnessed the murder.
+* **Assassins**, who may strike after the Heroes talk to Brother Enzo.
+* **Saleos**, a trapped demon.
 
 ### Scene Interactions, Clues, and Consequences
 
@@ -218,5 +197,7 @@ Output the converted scene Markdown with the following structure:
 
 [Describe how the scene concludes and transitions to the next. What must happen for the scene to end? What are the immediate consequences or next steps? This **SHOULD** relate to the CORE clues discovered and player actions in the scene.]
 ```
+
+**Double-check**: Have you removed any stat blocks or mechanical references? Have you replaced every old name in the scene with the correct one from the table?
 
 Output **only** markdown with no other output, and do not enclose it in a code block.

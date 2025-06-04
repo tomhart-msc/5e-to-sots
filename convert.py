@@ -12,6 +12,8 @@ from src import extract_lore
 from src import create_introduction
 from src import create_conclusion
 from src import convert_adversaries
+from src import extract_magic_items
+from src import convert_magic_items_to_sorcerous_gear
 
 def main():
     parser = argparse.ArgumentParser(description="Convert D&D 5e adventures into Swords of the Serpentine format.")
@@ -38,9 +40,13 @@ def main():
     parser_group_scenes.add_argument("--pdf", required=True, help="Path to the original PDF (for raw text context)")
     parser_group_scenes.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
 
-    parser_adversaries = subparsers.add_parser("extract-adversaries", help="Extract D&D stat blocks from adventure markdown")
+    parser_adversaries = subparsers.add_parser("extract-adversaries", help="Extract D&D stat blocks from adventure PDF")
     parser_adversaries.add_argument("--pdf", required=True, help="Path to the original PDF (for raw text context)")
     parser_adversaries.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
+
+    parser_magic_items = subparsers.add_parser("extract-magic-items", help="Extract D&D magic items from adventure PDF")
+    parser_magic_items.add_argument("--pdf", required=True, help="Path to the original PDF (for raw text context)")
+    parser_magic_items.add_argument("--dry-run", action="store_true", help="Generate prompts but do not call LLM")
 
     parser_convert_scene = subparsers.add_parser("convert-scene", help="Generate a scene conversion prompt")
     parser_convert_scene.add_argument("--scene", required=True, help="Path to scene YAML file (e.g., work/ADVENTURE_NAME_scenes/scene_01_*.yaml)")
@@ -83,6 +89,10 @@ def main():
     convert_adversaries_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
     convert_adversaries_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
 
+    convert_items_parser = subparsers.add_parser("convert-items", help="Convert items for the adventure")
+    convert_items_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
+    convert_items_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
+
     args = parser.parse_args()
 
     if args.command == "extract-lore":
@@ -97,6 +107,9 @@ def main():
     elif args.command == "group-scenes":
         dry_run = args.dry_run
         group_locations_to_scenes.run(pdf_path=args.pdf, dry_run=dry_run)
+    elif args.command == "extract-magic-items":
+        dry_run = args.dry_run
+        extract_magic_items.run(args.pdf, dry_run=dry_run)
     elif args.command == "extract-adversaries":
         dry_run = args.dry_run
         extract_adversaries.run(args.pdf, dry_run=dry_run)
@@ -123,6 +136,9 @@ def main():
     elif args.command == "convert-adversaries":
         dry_run = args.dry_run
         convert_adversaries.run(args.pdf, dry_run=dry_run)
+    elif args.command == "convert-items":
+        dry_run = args.dry_run
+        convert_magic_items_to_sorcerous_gear.run(args.pdf, dry_run=dry_run)
     else:
         parser.print_help()
         return 1

@@ -3,6 +3,10 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from src.llm_utils import send_prompt_to_openrouter
 from src.notes import load_notes_md
+from src.convert_adversaries import response_path as convert_adversaries_response_path
+from src.convert_magic_items_to_sorcerous_gear import response_path as convert_gear_path
+from src.text_utils import extract_markdown_section
+from src.yaml_utils import quote_colon_strings
 
 def load_yaml(path):
     with open(path, "r", encoding="utf-8") as f:
@@ -15,7 +19,7 @@ def load_yaml(path):
         lines = lines[:-1]
 
     cleaned = "".join(lines)
-    return yaml.safe_load(cleaned)
+    return yaml.safe_load(quote_colon_strings(cleaned))
 
 def prompt_path(scene_path: str):
     scene_file = Path(scene_path)
@@ -47,10 +51,18 @@ def run(scene_path: str, pdf_path: str, adventure_outline_path: str, notes_path:
     rules_reference = Path("data/rules_reference.md").read_text(encoding="utf-8")
     setting_reference = Path("data/setting_reference.md").read_text(encoding="utf-8")
 
+    adversaries_markdown = Path(convert_adversaries_response_path(adventure_name)).read_text(encoding="utf-8")
+    adversaries_table = extract_markdown_section(adversaries_markdown, "Renamed NPCs and Adversaries", 3)
+
+    gear_markdown = Path(convert_gear_path(adventure_name)).read_text(encoding="utf-8")
+    gear_table = extract_markdown_section(gear_markdown, "Transformed Magic Items", 3)
+
     # Render Jinja2 template
     env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template("scene_prompt.md.j2")
     prompt = template.render(
+        gear_table=gear_table,
+        adversaries_table = adversaries_table,
         lore=lore,
         scene=scene_data,
         adventure_gm_notes=adventure_gm_notes,

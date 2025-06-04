@@ -2,10 +2,10 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from src.notes import load_notes_md
 from src.llm_utils import send_prompt_to_openrouter
-from src.extract_adversaries import response_path as extract_adversaries_response_path
+from src.extract_magic_items import response_path as extract_magic_items_path
 from src.text_utils import extract_pdf_text, strip_code_blocks, extract_markdown_section
 
-STEP_NAME="convert_adversaries"
+STEP_NAME="convert_magic_items_to_sorcerous_gear"
 
 def prompt_name(adventure_name: str):
     return f"{STEP_NAME}_{adventure_name}_prompt"
@@ -16,21 +16,21 @@ def response_path(adventure_name: str):
     """
     return Path("work") / f"{prompt_name(adventure_name)}.response.md"
 
-def create_adversaries_section(markdown_file, adventure_name):
-    adversaries_section_file = f"work/{adventure_name}_adversaries_appendix.md"
+def create_gear_section(markdown_file, adventure_name):
+    gear_section_file = f"work/{adventure_name}_gear_appendix.md"
 
     # Read the full markdown content
     with open(markdown_file, 'r', encoding='utf-8') as f_read:
         markdown_text = f_read.read()
 
     # Extract the "Adversary Statistics" section
-    adversary_section = extract_markdown_section(markdown_text, "Adversary Statistics", 3)
+    gear_section = extract_markdown_section(markdown_text, "Gear Descriptions", 3)
 
     # Write the extracted section to the new file
-    print (f"writing to {adversaries_section_file}")
-    with open(adversaries_section_file, 'w', encoding='utf-8') as f_write:
-        f_write.write("## Appendix: NPCs and Adversaries\n\n")
-        f_write.write(adversary_section + '\n')
+    print (f"writing to {gear_section_file}")
+    with open(gear_section_file, 'w', encoding='utf-8') as f_write:
+        f_write.write("## Appendix: Gear\n\n")
+        f_write.write(gear_section + '\n')
 
 def run(pdf: str, dry_run: bool = False):
     work_dir = Path("work")
@@ -39,15 +39,14 @@ def run(pdf: str, dry_run: bool = False):
     pdf_path = Path(pdf)
     adventure_name = pdf_path.stem
 
-    adversaries_yaml_path = extract_adversaries_response_path(adventure_name)
-    adversaries_yaml = Path(adversaries_yaml_path).read_text(encoding="utf-8")
+    magic_items_yaml_path = extract_magic_items_path(adventure_name)
+    magic_items_yaml = Path(magic_items_yaml_path).read_text(encoding="utf-8")
 
     # Load shared references (assuming they are in data/ directory)
     try:
         system_reference = Path("data/rules_reference.md").read_text(encoding="utf-8")
-        world_reference = Path("data/world_reference.md").read_text(encoding="utf-8")
         setting_reference = Path("data/setting_reference.md").read_text(encoding="utf-8")
-        adversaries_reference = Path("data/adversaries_reference.md").read_text(encoding="utf-8")
+        sorcerous_gear_reference = Path("data/sorcerous_gear_reference.md").read_text(encoding="utf-8")
     except FileNotFoundError as e:
         print(f"Error: Missing reference file. {e}")
         return None
@@ -65,10 +64,9 @@ def run(pdf: str, dry_run: bool = False):
         adventure_gm_notes=adventure_gm_notes,
         lore=lore,
         system_reference=system_reference,
-        adversaries_reference=adversaries_reference,
+        sorcerous_gear_reference=sorcerous_gear_reference,
         setting_reference=setting_reference,
-        world_reference=world_reference,
-        adversaries=adversaries_yaml,
+        magic_items=magic_items_yaml,
         draft_content=extract_pdf_text(pdf_path)
     )
 
@@ -76,4 +74,4 @@ def run(pdf: str, dry_run: bool = False):
     if not dry_run:
         strip_code_blocks(response_path(adventure_name))
         # Process the statistics into an adventure appendix
-        create_adversaries_section(response_path(adventure_name), adventure_name)
+        create_gear_section(response_path(adventure_name), adventure_name)

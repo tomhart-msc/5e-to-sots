@@ -3,7 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 from src.text_utils import extract_pdf_text, strip_code_blocks
 from src.llm_utils import send_prompt_to_openrouter
 
-STEP_NAME="extract_adversaries"
+STEP_NAME="extract_magic_items"
 
 def prompt_name(adventure_name: str):
     return f"{STEP_NAME}_{adventure_name}_prompt"

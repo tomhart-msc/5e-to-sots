@@ -1,0 +1,73 @@
+## 🎯 Task: Extract Named Magic Items and Sorcerous Gear
+
+You are analyzing a Dungeons & Dragons adventure module to extract all **explicitly described named or unique magical items**. Everything after the line `!!!!! BEGIN ADVENTURE CONTENT !!!!!` is the adventure text.
+
+Your objective is to return a YAML list of **all unique, named, or clearly magical items** that:
+- Are given **a specific name** (e.g., "Rod of Blinding Radiance", "Uxorioth's Libram").
+- Are **explicitly magical** or contain **arcane, divine, or supernatural effects**.
+- Are **physically described** as treasure, gear, relics, or mysterious objects in the adventure.
+
+⚠️ Do **not** invent items or infer them based on theme. Only include items that are **explicitly described or listed** in the text.
+
+---
+
+### ✅ Include:
+- Named magical items with mechanical properties (e.g., "Rod of the Storm").
+- Unnamed but clearly magical relics, artifacts, or items with described powers (e.g., "a sword of whispering voidlight").
+- Items listed in treasure hoards or NPC inventories **if** described with magical or supernatural traits.
+- Named books or tomes with magical effects (e.g., “The Libram of the Bleeding Sun”).
+
+### ❌ Do *not* include:
+- Generic gear with no magical properties (e.g., “a jeweled dagger” or “a gold circlet”).
+- Items that are *only* described visually or thematically unless they are described as magical.
+- Items from monster stat blocks unless they are separately described in the scene narrative.
+- Items mentioned in the background but not present in the adventure itself.
+
+---
+
+## 🧩 Output Format
+
+Return a single YAML list with the following structure:
+
+```yaml
+magic_items:
+  - name: <Item Name or Brief Description>
+    impact: <minor | standard | major | legendary>
+    description_text: |
+      <Exact quote(s) from the adventure that describe this item.>
+```
+
+- The `impact` field is your estimate of the item's **narrative weight or mechanical power**, following these guidelines:
+  - minor: A subtle or low-impact magical item or trinket.
+  - standard: A useful, mid-tier magical item with a clear utility.
+  - major: A potent item that could shape encounters or plots.
+  - legendary: An artifact-tier item central to the story or adventure.
+- The `description_text` **must be copied verbatim** from the adventure with **no additional interpretation**.
+- If an item is mentioned in multiple places, combine all relevant text into a single `description_text` block.
+
+--
+
+# 🧪 Example Output
+
+```yaml
+magic_items:
+  - name: Rod of Blinding Radiance
+    impact: major
+    description_text: |
+      The rod is carved of solid lightstone, warm to the touch. In dim light, it glows with a pulsing white heat. Any creature struck by the rod must succeed on a DC 16 Constitution saving throw or be blinded for 1 minute.
+
+  - name: Uxorioth’s Libram
+    impact: legendary
+    description_text: |
+      Bound in flayed skin and sealed with arcane glyphs, this tome whispers when opened. Reading even a single page costs the reader 1d4 Wisdom and grants visions of the future — and the inevitable end of all gods.
+
+  - name: Sunstone Pendant
+    impact: minor
+    description_text: |
+      This small gem glows softly in darkness and hums when a lie is spoken within 10 feet.
+```
+
+---
+
+!!!!! BEGIN ADVENTURE CONTENT !!!!!!
+{{ draft_content.strip() }}

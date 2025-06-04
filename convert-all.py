@@ -75,6 +75,26 @@ def main():
     if not summary_md.exists():
         print(f"Error: {summary_md} not found.")
         return 1
+    
+    extract_adversaries_md = response_funcs["extract_adversaries"](adventure_name)
+    if not extract_adversaries_md.exists():
+        run_cmd(["./convert.py", "extract-adversaries", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
+        ensure_exists(extract_adversaries_md)
+
+    convert_adversaries_md = response_funcs["convert_adversaries"](adventure_name)
+    if not convert_adversaries_md.exists():
+        run_cmd(["./convert.py", "convert-adversaries", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
+        ensure_exists(convert_adversaries_md)
+
+    extract_magic_items_md = response_funcs["extract_magic_items"](adventure_name)
+    if not extract_magic_items_md.exists():
+        run_cmd(["./convert.py", "extract-magic-items", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
+        ensure_exists(extract_magic_items_md)
+
+    convert_magic_items_md = response_funcs["convert_magic_items_to_sorcerous_gear"](adventure_name)
+    if not convert_magic_items_md.exists():
+        run_cmd(["./convert.py", "convert-items", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
+        ensure_exists(convert_magic_items_md)
 
     # New Step: Parse individual locations from the structure
     # This step produces a YAML file with identified locations
@@ -150,8 +170,10 @@ def main():
 
     # Combine the sections
     final_md = Path(f"work/{adventure_name}_final.md")
+    adversaries_appendix_md = Path(f"work/{adventure_name}_adversaries_appendix.md")
+    gear_appendix_md = Path(f"work/{adventure_name}_gear_appendix.md")
     with open(final_md, "w") as outfile:
-        for file in [introduction_md, consistent_md, conclusion_md]:
+        for file in [introduction_md, consistent_md, conclusion_md, adversaries_appendix_md, gear_appendix_md]:
             with open(file, "r") as infile:
                 outfile.write(infile.read())
                 outfile.write("\n\n")

@@ -1,9 +1,4 @@
-{{ system_reference }}
-{{ setting_reference }}
-
----
-
-## 🎯 Task: Final Adventure Polish
+# Your Role and Task: Final Adventure Polish
 
 You are an expert adventure editor for *Swords of the Serpentine*. Your task is to review a draft adventure, ensure its narrative consistency across scenes, and write a compelling, GM-facing introduction, and a conclusion, based on the provided outline and content.
 
@@ -14,12 +9,19 @@ The individual scenes in this draft were generated largely in isolation. It is C
 * **Overall tone and theme:** Ensure the adventure maintains a consistent feel appropriate for *Swords of the Serpentine*.
 * **Scene numbering:** Ensure scenes are numbered sequentially.
 
-Everything after "!!!!! BEGIN ADVENTURE CONTENT !!!!!!" is the adventure content.
+Everything after "!!!!! BEGIN ADVENTURE CONTENT !!!!!!" is the adventure content. Everything before that is instructions.
+
+---
+
+{{ system_reference }}
+
+---
+
+{{ setting_reference }}
 
 ---
 
 ## Revised Lore
-
 You **MUST** perform this task consistently with this information mapping the original elements of the adventure to _Swords of the Serpentine_ lore.
 
 {{ lore.strip() }}
@@ -44,11 +46,11 @@ Notes:
 ---
 
 ## 🧩 Output Format
-
 Your response MUST be the **entire edited adventure markdown**, with the corrected and consistent scene content.
+Another process will convert your output to a PDF VERBATIM, so DO NOT include any conversational text, explanations, YAML blocks, or *any content from this prompt (including these instructions, lore, or GM Intent sections)* in your output.
+**Simply provide the final, complete, and ready-to-use markdown adventure document based on the content that follows the separator.**
 
-**Another process will convert your output to a PDF VERBATIM, so DO NOT include any conversational text, explanations, or YAML blocks in your output.**
-**Simply provide the final, complete, and ready-to-use markdown adventure document.**
+---
 
 !!!!! BEGIN ADVENTURE CONTENT !!!!!!
 {{ draft_content.strip() }}

@@ -1,0 +1,123 @@
+{{ system_reference }}
+
+---
+
+{{ setting_reference }}
+
+---
+
+{{ sorcerous_gear_reference }}
+
+---
+
+## Revised Lore
+
+You **MUST** perform this task consistently with this information mapping the original elements of the adventure to _Swords of the Serpentine_ lore.
+
+{{ lore.strip() }}
+
+{%- if adventure_gm_notes.notes %}
+---
+
+## 🧠 GM Intent
+
+{{ adventure_gm_notes.notes.strip() }}
+{%- endif %}
+
+---
+
+## 🎯 Task: Convert Magical Items to Sorcerous Gear
+
+You will be given a YAML list of magical items extracted from a D&D adventure. Your job is to:
+
+1. **Rename** each item if needed to match the tone of *Swords of the Serpentine*.
+2. **Transform** each into a Sorcerous Gear item with unique narrative flair and mechanical effect.
+3. **Use the item's `impact` field** to guide how powerful the mechanics should be.
+
+### Impact Guidelines
+
+| Impact | Description |
+|--------|-------------|
+| **minor** | Subtle or atmospheric item. Typically one-use or passive benefit (e.g., small narrative twist, situational luck, +1 to a specific Maneuver type). No Sorcery effects. |
+| **standard** | Useful item with limited scope. Might grant a bonus to a General ability, allow a minor maneuver trick, or activate once per scene. May have a small drawback or require a condition to activate. |
+| **major** | Potent and scene-defining. Grants high-impact bonuses (e.g., +6 to a Warfare attack, Morale damage reflection, situational abilities that shift a fight or investigation). May have a Refresh-based recharge or cause narrative strain (e.g., fear, visions, side effects). Not restricted to Sorcerers. |
+| **legendary** | Artifact-tier item. Tied to prophecy, ancient power, or forgotten gods. Enables powerful spell-like effects, miracle-level changes, or dramatic narrative weight. Usually carries costs: possession risk, Morale loss, or increasing Corruption. May or may not require Sorcery ability, depending on design. |
+
+Do **not** use D&D mechanics or terminology (e.g., “DC”, “saving throw”, dice expressions). Use *SotS* mechanics such as:
+- Sorcery Spheres (e.g., Flame, Time, Forgotten Lore)
+- Pool bonuses, Refresh costs, Morale damage
+- Possession, corruption, or magical obsession
+
+---
+
+## 🧾 Input: Extracted Magic Items
+
+```yaml
+{{ magic_items.strip() }}
+```
+
+---
+
+## 🧩 Output Format
+
+Output a single Markdown document with the following structure:
+
+```markdown
+## Sorcerous Gear
+
+### Transformed Magic Items
+
+| Original Name | Revised Name | Impact |
+|---|---|---|
+| Rod of Blinding Radiance | Diadem of the Second Dawn | major |
+| Uxorioth's Libram | The Book of the Bleeding God | legendary |
+
+### Gear Descriptions
+
+[These are examples.]
+
+#### Diadem of the Second Dawn
+**Impact**: Major  
+**Sphere**: Flame  
+**Effect**: A circlet of lightstone that radiates sunfire when invoked. Once per scene, the bearer may blind nearby foes with a searing flare. Affected enemies must resist a Daze Maneuver (Morale, Difficulty 6) or lose 1 Grit. Undead in the area suffer 1 Morale damage.  
+**Drawback**: If invoked more than once per adventure, the bearer experiences lingering visions of a forgotten solar god. These visions inflict 2 Morale damage.
+
+#### The Book of the Bleeding God
+**Impact**: Legendary  
+**Type**: Grimoire  
+**Corruption Requirement**: Yes (1+ rank in Corruption)  
+**Grants**: 2 bonus Corruption pool points  
+**Sphere(s)**: Blood
+**Effect**:  
+Bound in flayed skin stitched shut with rusted wire, this grimoire pulses when held close to the heart. Its pages cannot be turned by mundane means; blood spilled upon the cover causes a chapter to surface, written in flowing Serpentine glyphs.
+
+The grimoire grants 2 bonus Corruption pool points usable only for the Sphere of Blood. When casting Sorcery from this book, the Sorcerer often glimpses distorted memories of gods bleeding in the Void.
+
+**Personality & Communication**:  
+The grimoire is animate and arrogant. It speaks through mouthless whispers, audible only to its bearer. When hungry, it chants prophecies aloud in the voices of dead prophets until fed again.
+
+**Possession Risk**:  
+The first time it is used in an adventure, the book attempts to possess its bearer with a Difficulty 8 Morale Maneuver. Failure causes the Sorcerer to suffer 6 Morale damage and become possessed by the book for a scene. While possessed, the bearer speaks in unknown languages, bleeds from the eyes, and seeks out sources of divine power to defile.
+
+The bearer may attempt to throw off the possession by passing a Difficulty 8 Morale test anytime they take Health damage. Success ends the possession. The Sorcerer retains no memory of their actions afterward.
+
+**Other Properties**:  
+- Cannot be destroyed by mundane means.  
+- Drinking the blood of divine beings restores one bonus Corruption point.
+```
+
+**Double-check**: Have you removed any reference to D&D mechanics? **ONLY** express mechanics in Swords of the Serpentine terms defined in this prompt.
+
+---
+
+## 📚 Adventure Context (Optional)
+
+You may refer to the following text to help rename or reinterpret items within the setting.
+
+```
+{{ draft_content.strip() }}
+```
+
+---
+
+**DO NOT include explanation, lists, commentary, or YAML in your response. Only return Markdown matching the format above.**

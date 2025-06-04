@@ -3,9 +3,51 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from src.llm_utils import send_prompt_to_openrouter
 from src.notes import load_notes_md
+import shutil
+import os
 
-PROMPT_HEADER = """You are an expert adventure editor for Swords of the Serpentine."""
+def check_and_fallback_scenes(input_filename: str, output_filename: str):
+    """
+    Compares the number of lines starting with '## Scene' in two files.
+    If the counts differ, it overwrites the output file with the content
+    of the input file and prints a warning.
 
+    Args:
+        input_filename: The path to the original draft file.
+        output_filename: The path to the LLM's output file.
+    """
+
+    def count_scene_lines(filename: str) -> int:
+        """Helper to count '## Scene' lines."""
+        count = 0
+        try:
+            with open(filename, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if line.strip().startswith('## Scene'):
+                        count += 1
+        except FileNotFoundError:
+            print(f"Warning: File not found - {filename}")
+            return -1  # Indicate an error
+        return count
+
+    input_scene_count = count_scene_lines(input_filename)
+    output_scene_count = count_scene_lines(output_filename)
+
+    if input_scene_count == -1 or output_scene_count == -1:
+        # One or both files not found, warning already printed by helper.
+        return
+
+    if input_scene_count != output_scene_count:
+        print(f"WARNING: Scene count mismatch!")
+        print(f"  Input file ('{input_filename}') has {input_scene_count} scenes.")
+        print(f"  Output file ('{output_filename}') has {output_scene_count} scenes.")
+        try:
+            shutil.copyfile(input_filename, output_filename)
+            print(f"  Overwriting '{output_filename}' with content from '{input_filename}' (fallback initiated).")
+        except Exception as e:
+            print(f"  ERROR: Failed to overwrite output file: {e}")
+    else:
+        print(f"Scene count matched: {input_scene_count} scenes in both files. No fallback needed.")
 
 
 def prompt_name(adventure_name: str):
@@ -76,24 +118,12 @@ def run(draft: str, adventure_outline: str, dry_run: bool = False):
         adventure_outline=adventure_outline_indented
     )
 
-    llm_response_content = None
+    send_prompt_to_openrouter(prompt_md=prompt_content, prompt_name=prompt_name(adventure_name), dry_run=dry_run)
     if not dry_run:
-        response_file = response_path(adventure_name)
-        print(f"Sending prompt to LLM for consistency check and introduction for '{adventure_name}'...")
-        
-        # Assume send_prompt_to_openrouter returns the raw text response from the LLM
-        llm_response_content = send_prompt_to_openrouter(prompt_md=prompt_content, prompt_name=prompt_name(adventure_name), dry_run=dry_run)
-        
-        if llm_response_content:
-            response_file.write_text(llm_response_content, encoding="utf-8")
-            print(f"LLM raw response saved to {response_file}")
-            
-            # The LLM's response is the final, edited markdown itself, as per prompt instruction.
-            # Save it to the expected final markdown file path.
-            final_md_path = Path("work") / f"{adventure_name}_final.md"
-            final_md_path.write_text(llm_response_content, encoding="utf-8")
-            print(f"Final cleaned markdown saved to {final_md_path}")
-        else:
-            print(f"LLM did not return a response for '{adventure_name}'.")
+        # Check if the LLM did anything crazy like dropping scenes. This conversion step is risky.
+        # If it did, fall back to the input.
+        input = draft_path
+        output = response_path(adventure_name)
+        check_and_fallback_scenes(input, output)
     
     return response_path(adventure_name) # Return the path to the LLM's raw response file
