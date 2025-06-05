@@ -33,8 +33,27 @@ You will be given a YAML list of magical items extracted from a D&D adventure. Y
 1. **Rename** each item if needed to match the tone of *Swords of the Serpentine*.
 2. **Transform** each into a Sorcerous Gear item with unique narrative flair and mechanical effect.
 3. **Use the item's `impact` field** to guide how powerful the mechanics should be.
+4. **Use the `category` field** (e.g., weapon, grimoire, miscellaneous) to determine which mechanical rules apply. Follow the guidance for that section in the “Mechanics Overview.”
 
-### Impact Guidelines
+If an item’s category or impact field appears invalid or inconsistent with the source description, make a best-guess correction and note it in the table.
+
+---
+
+## Mechanics Overview
+
+Magic items in *Swords of the Serpentine* fall into three broad categories: **Weapons**, **Grimoires**, and **Miscellaneous Sorcerous Gear**. Each type has distinct rules, benefits, and narrative hooks. Use the `category` value to determine which guidance applies when converting items.
+
+### Contraindications (All Types)
+
+- ❌ Do **not** reference D&D terms: **Wisdom**, **Intelligence**, **Dexterity**, **saving throws**, **attack rolls**, **disadvantage**, etc.
+- ❌ Do **not** use dice notation (e.g., `1d6+2`).
+- ❌ Do **not** assign a **Sorcerous Sphere** unless thematically justified.
+- ❌ Do **not** assign or use **Corruption** unless the item is a **Grimoire**.
+- ✅ Use **SotS mechanics only**: Maneuver Difficulty, Health/Morale damage, Pool bonuses, Refresh costs.
+
+---
+
+## 📊 Impact Guidelines
 
 | Impact | Description |
 |--------|-------------|
@@ -43,10 +62,101 @@ You will be given a YAML list of magical items extracted from a D&D adventure. Y
 | **major** | Potent and scene-defining. Grants high-impact bonuses (e.g., +6 to a Warfare attack, Morale damage reflection, situational abilities that shift a fight or investigation). May have a Refresh-based recharge or cause narrative strain (e.g., fear, visions, side effects). Not restricted to Sorcerers. |
 | **legendary** | Artifact-tier item. Tied to prophecy, ancient power, or forgotten gods. Enables powerful spell-like effects, miracle-level changes, or dramatic narrative weight. Usually carries costs: possession risk, Morale loss, or increasing Corruption. May or may not require Sorcery ability, depending on design. |
 
-Do **not** use D&D mechanics or terminology (e.g., “DC”, “saving throw”, dice expressions). Use *SotS* mechanics such as:
-- Sorcery Spheres (e.g., Flame, Time, Forgotten Lore)
-- Pool bonuses, Refresh costs, Morale damage
-- Possession, corruption, or magical obsession
+---
+
+## ⚔️ Weapons
+
+Weapons are enchanted or legendary tools of violence. They may affect enemies' Morale, add to Damage Modifiers, or provide narrative powers.
+
+### Rules
+
+- May add a **+1 Damage Modifier**
+- May allow a **Maneuver** (e.g., Daze, Restrain, Bluff) at a set Difficulty
+- May grant one-use **Refresh** or activate on specific narrative conditions (e.g., when a foe dies, when the sun is visible)
+- No Sphere access or Corruption costs unless explicitly mystical
+
+### Example Behaviors
+
+- A sword that burns with ancestral flame, dealing 1 Morale damage to undead on a hit
+- A whip that can Daze enemies once per scene (Difficulty 6 Morale Maneuver)
+- A spear that glows when a lie is told nearby
+
+---
+
+## 📖 Grimoires
+
+Grimoires are sentient, often malevolent books of ancient sorcery. They are powerful and dangerous.
+
+### Rules
+
+- Require **1+ ranks in the Corruption Investigative Ability**
+- Grant **bonus Corruption pool points**
+- Grant access to one or more specific **Sorcerous Spheres**
+- Typically attempt a **Possession Maneuver** (Difficulty 6-8) the first time used per adventure
+- Must have a **voice/personality**
+- May contain **True Names**, forbidden knowledge, or unique spells
+
+### Valid Sorcerous Spheres (for Grimoires)
+
+The following are the official Sorcerous Spheres from *Swords of the Serpentine*. Each sphere affects Health, Morale, or both. Use **only** these spheres when assigning grimoire effects:
+
+| Sphere               | Affects         |
+|----------------------|-----------------|
+| Demonology           | Health, Morale  |
+| Disease              | Health, Morale  |
+| Earth                | Health          |
+| Fear                 | Morale          |
+| Fire                 | Health          |
+| Flesh                | Health          |
+| Ghosts and Spirits   | Morale          |
+| Ice                  | Health          |
+| Illusion             | Morale          |
+| Love                 | Morale          |
+| Luck                 | Health, Morale  |
+| Memory               | Morale          |
+| Music                | Morale          |
+| Necromancy           | Health          |
+| Plants               | Health          |
+| Possession           | Health, Morale  |
+| Secrets              | Morale          |
+| Serpents             | Health          |
+| Shadow               | Health          |
+| Statuary             | Health          |
+| Swamp                | Health          |
+| Transformation       | Health          |
+| Transmutation        | Health          |
+| Transportation       | Health, Morale  |
+| Trickery             | Morale          |
+| Water                | Health          |
+| Worship              | Morale          |
+
+### Example Behaviors
+
+- A book that turns the reader into stone when possessed
+- A volume that grants Forgotten Lore and Blood spheres, whispering in dead prophets' voices
+- A tome that demands blood to turn its pages
+
+---
+
+## ✨ Miscellaneous Sorcerous Gear
+
+These include relics, tokens, jewelry, charms, tools, and worn items that don't fall into the above categories.
+
+### Rules
+
+- Do **not** require Corruption or grant Spheres
+- May grant bonus to **General abilities**, or allow narrow use of **Investigative abilities**
+- Often include narrative drawbacks (e.g., compulsions, vulnerabilities)
+- Limited-use, or active under specific conditions
+- Never possess the bearer
+
+### Example Behaviors
+
+- A knife that reveals the future if used in a sacrifice
+- An earring that grants Liar’s Tell but compels the wearer to gamble
+- A coin that grants Luck when given to a beggar
+
+These items are often whimsical, cursed, or bound to mythic stories. They should be flavorful, useful, and dangerous in creative ways — but not spellbooks in disguise.
 
 ---
 
