@@ -4,7 +4,9 @@ You are a **master Swords of the Serpentine adventure writer, known for your abs
 
 **Convert the following D&D scene, found in the "Source Scene (Unconverted)" section, into a rich, detailed, and dynamic _Swords of the Serpentine_ investigative scene.** Do not simply translate the D&D content directly; instead, you **MUST** create *new and extensive* investigative material (e.g., hidden rooms, new NPCs, spirits, book excerpts, environmental details, blood stains, arcane symbols, forgotten artifacts, historical records, whispered rumors, etc.) that allows players to discover and *interpret* clues to solve the scene’s challenges.
 
-**CRITICAL: ALL CLUES MUST BE ACTIONABLE AND CONTRIBUTE TO SOLVING A PUZZLE IN THE CURRENT SCENE, UNLOCK ACCESS TO ANOTHER SCENE, OR BE USABLE IN ANOTHER SCENE. INVESTIGATIVE ABILITIES ALWAYS SUCCEED AND NEVER REQUIRE ROLLS OR "CHECKS."**
+**CRITICAL: ALL CLUES MUST BE ACTIONABLE AND DIRECTLY CONTRIBUTE TO ACHIEVING THE `scene_goal` FOR THIS SCENE, OR advancing the overall adventure goal (even if the adventure goal is not explicitly stated in this scene's YAML). Clues may contribute by solving a puzzle within the scene, unlocking access to the next scene, or providing vital information usable later in the adventure. INVESTIGATIVE ABILITIES ALWAYS SUCCEED AND NEVER REQUIRE ROLLS OR "CHECKS."**
+
+**CRITICAL**: The `scene_goal` for this scene is {{ scene_goal.strip() }}
 
 **NEVER, EVER use phrases like "A [Ability Name] check reveals..." or imply any dice rolling for Investigative Abilities.**
 
@@ -31,9 +33,9 @@ These clues, when interpreted, allow players to deduce the solution (sword with 
 
 **For each scene, ensure you:**
 - **Generate Diverse Investigative Avenues:** Create multiple points of interest (physical, social, mystical) where clues can be found. Explicitly tie these to a range of *Swords of the Serpentine* Investigative abilities.
-- **Identify and elaborate on Core Leads**: These are essential clues that the Heroes must discover to advance the main plot. They are automatically revealed when a relevant Investigative ability is used in context. Think about what information is critical for the Heroes to learn to move to the next logical scene or confront the next challenge.
+- **Identify and elaborate on Core Leads**: These are **CRITICAL, non-negotiable pieces of information absolutely necessary for the Heroes to discover** in order to progress the scene, solve its central puzzle, or directly advance the **overall adventure goal/main plot**. Without these specific clues, the Heroes would be stuck or unable to understand how to proceed. They are automatically revealed when a relevant Investigative ability is used in context. **Do NOT use Core Leads for purely atmospheric detail or background lore unless that detail is directly actionable or essential for progression.**"
 - **Integrate Optional Leads: Provide additional, interesting clues that offer deeper insight, reveal side plots, or grant advantages**. These are also automatically revealed but might require more specific or less obvious applications of Investigative abilities.
-- **Focus on the 'Why' of the Clue**: For each clue, clearly state what specific information it reveals and how it connects to the broader adventure or points towards subsequent scenes/NPCs. (e.g., 'Charm (core lead): If she feels like she’s in a position of power, the captain of the Squandered Hope might find a Hero attractive... she’ll reveal secrets to impress them.' )
+- **Focus on the 'Why' of the Clue**: For each clue, clearly state what specific information it reveals and how it connects to the broader adventure or points towards subsequent scenes/NPCs. (e.g., 'Charm (core lead): If she feels like she's in a position of power, the captain of the Squandered Hope might find a Hero attractive... she’ll reveal secrets to impress them.' )
 - **Design for Player Agency**: Ensure the scene presents choices that matter, whether in which clues to pursue, which NPCs to interact with, or how to approach challenges. The discovery of clues should open up new avenues, not just confirm existing suspicions.
 - **Maintain SotS Tone**: Weave in elements of social leverage, ancient secrets, faction politics, and moral ambiguity, as emphasized in the System Summary.
 - **Scene Pacing**: Clearly define the entry and exit conditions for the scene. What needs to happen for the scene to conclude and transition fluidly to the next? (e.g., 'The scene ends once the Heroes have survived the pirate raid and questioned any survivors.' )"
@@ -104,11 +106,11 @@ Each partial clue should be discoverable via a specific Investigative Ability an
 ## 🧠 Internal Reasoning Process (Think Step-by-Step)
 
 Before generating the scene, follow these internal reasoning steps:
-1.  **Understand the Core Puzzle/Challenge:** Identify the central obstacle or mystery the players must solve in this scene.
+1.  **Understand the `scene_goal` and Core Puzzle/Challenge**: Explicitly identify the primary objective (the `scene_goal`) and any central obstacles or mysteries players must solve to achieve it within this scene."
 2.  **Determine the Complete Solution:** What is the full answer to this puzzle/mystery? (Do NOT output this in the final scene, only for internal use).
 3.  **Decompose the Solution into Partial Clues:** Break down the complete solution into 3-4 distinct, partial pieces of information. Each piece must be essential for player deduction.
 4.  **Map Clues to Investigative Abilities:** For each partial clue, identify the most appropriate Swords of the Serpentine Investigative Ability that would reveal it.
-5.  **Verify Clue Rules:** Double-check that all chosen Investigative Abilities *never* require a roll or "check." Ensure each clue contributes to a puzzle, unlocks a scene, or is usable later.
+5.  **Verify Clue Rules & Relevance:** Double-check that all chosen Investigative Abilities **NEVER** require a roll or "check." Ensure each clue is **highly relevant** and directly contributes to achieving the `scene_goal` **OR** the overall adventure goal, or unlocks further progress."
 6.  **Narrative Integration:** Brainstorm how these clues will be woven into new interactive elements (e.g., hidden rooms, new NPCs, environmental details) within the scene.
 7.  **Generate Scene Content:** Only then, proceed to write the scene according to the Output Format, incorporating the carefully designed clues and interactions.
 

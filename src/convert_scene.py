@@ -8,6 +8,19 @@ from src.convert_magic_items_to_sorcerous_gear import response_path as convert_g
 from src.text_utils import extract_markdown_section
 from src.yaml_utils import quote_colon_strings
 
+def extract_scene_goal(data) -> str:
+    """
+    Pulls the 'scene_goal' out of a YAML document string.
+
+    Args:
+        yaml_string: A string containing the YAML document.
+
+    Returns:
+        The content of the 'scene_goal' field as a string,
+        or an empty string if 'scene_goal' is not found.
+    """
+    return data.get('scene_goal', '')
+    
 def load_yaml(path):
     with open(path, "r", encoding="utf-8") as f:
         lines = f.readlines()
@@ -42,6 +55,7 @@ def run(scene_path: str, pdf_path: str, adventure_outline_path: str, notes_path:
     adventure_notes_file = Path(f"notes/{adventure_name}_adventure_notes.md")
     lore_file = f"work/extract_lore_{adventure_name}_prompt.response.md"
     scene_data = load_yaml(scene_file)
+    scene_goal = extract_scene_goal(scene_data)
     adventure_gm_notes = load_notes_md(adventure_notes_file) if adventure_notes_file.exists() else {}
     gm_notes = load_notes_md(notes_file) if notes_file and notes_file.exists() else {}
     adventure_outline = Path(adventure_outline_path).read_text(encoding="utf-8")
@@ -61,6 +75,7 @@ def run(scene_path: str, pdf_path: str, adventure_outline_path: str, notes_path:
     env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template("scene_prompt.md.j2")
     prompt = template.render(
+        scene_goal=scene_goal,
         gear_table=gear_table,
         adversaries_table = adversaries_table,
         lore=lore,
