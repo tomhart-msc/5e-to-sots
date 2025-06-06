@@ -15,6 +15,7 @@ You are provided with:
 Your output should be a series of YAML blocks, one for each new scene. Each scene block MUST include:
 * `scene_number`: A unique sequential number.
 * `scene_title`: A descriptive title for the grouped scene.
+* `scene_goal`: A concise statement of the **OVERARCHING PRIMARY OBJECTIVE** of this grouped scene. This goal should encompass *all* activities within the scene, including preparatory steps for a larger objective (like a ritual). Do NOT list sub-goals or phases as separate goals.
 * `location`: A **list** of the *exact names* of all identified locations (from the "Identified Locations" section below) that are part of this single scene. **CRITICAL: The location names in this list MUST ONLY come directly from the 'name' fields provided in the 'Identified Locations' section. You MUST NOT infer, generate, or use any location names that are not explicitly present in that list (e.g., from the raw adventure text).**
 * `raw_adventure_text`: The concatenated raw text from the original adventure that pertains to ALL locations included in this scene. This is CRITICAL. Extract the exact text without modification.
 
@@ -27,21 +28,57 @@ Your output should be a series of YAML blocks, one for each new scene. Each scen
 
 ### **Explicit Grouping Rule:**
 
-* **If a sequence of locations (e.g., Entry Hall, Sacristy, Vestry, Sanctuary) contains components for a SINGLE, CONTINUOUS RITUAL or a SHARED OBJECTIVE, these locations MUST be grouped into ONE scene.** The progression between them should be seamless and part of a larger narrative beat.
+* **If a sequence of locations (e.g., Entry Hall, Sacristy, Vestry, Sanctuary) contains components for a SINGLE, CONTINUOUS RITUAL or a SHARED OVERARCHING OBJECTIVE, these locations MUST be grouped into ONE scene.** The progression between them should be seamless and part of a larger narrative beat. This includes all **phases or sub-tasks** that contribute to that single ritual or objective, especially if players can approach these phases in a non-linear fashion (e.g., finding components *and* performing the ritual are part of one cohesive scene and goal).
 * **Identify the main objective/ritual.** All locations contributing to *that single objective* form one scene.
-* **Crucially, if an 'Identified Location' `name` already represents such a pre-combined unit (e.g., 'Sacristy_Vestry_Sanctuary_Combined'), you MUST treat that named entry as a single, indivisible location for scene assignment. Do NOT split this pre-combined unit into multiple scenes, regardless of how many individual sections are described within its `description_text`.**
+* **Crucially, if an 'Identified Location' `name` already represents such a pre-combined unit (e.g., 'Sacristy_Vestry_Sanctuary_Combined'), you MUST treat that named entry as a single, indivisible location for scene assignment. Do NOT split this pre-combined unit into multiple scenes, regardless of how many individual sections or activities are described within its `description_text`.**
 
 **Example Scenario (DO THIS!):**
 * **Identified Locations:** "Entry Hall", "Sacristy", "Vestry", "Sanctuary"
 * **Underlying Objective (Implicit or Explicit in text):** "Perform the Temple's Cleansing Ritual"
-* **CORRECT SCENE GROUPING:**
-    * **Scene Title:** "Temple Cleansing Ritual"
-    * **Locations included:** Entry Hall, Sacristy, Vestry, Sanctuary
-    * **Raw Text:** The full paragraphs describing all these locations and any related events.
+* **CORRECT SCENE GROUPING (ONE SCENE):**
+    ```yaml
+    scene_number: [e.g., 1]
+    scene_title: Temple Cleansing Ritual
+    scene_goal: |
+      Perform the complete Temple's Cleansing Ritual, including locating all necessary components and executing the ceremony.
+    location:
+      - Entry Hall
+      - Sacristy
+      - Vestry
+      - Sanctuary
+    raw_adventure_text: |
+      [The full concatenated raw text describing all these locations and any related events, including finding components and performing the ritual.]
+    ```
+
+**Example Scenario (DO NOT DO THIS! - AVOID SPLITTING SINGLE OBJECTIVES):**
+* **Identified Locations:** "Sacristy_Vestry_Sanctuary" (as a single pre-combined unit)
+* **Underlying Objective:** "Perform the Temple's Cleansing Ritual"
+* **INCORRECT SCENE GROUPING (AVOID THIS!):**
+    ```yaml
+    scene_number: [e.g., 2]
+    scene_title: Ritual Preparation: Sacristy & Vestry
+    scene_goal: |
+      Locate the necessary vestments and objects to prepare the sanctuary for a potential ritual.
+    location:
+      - Sacristy_Vestry_Sanctuary
+    raw_adventure_text: |
+      [Raw text for Sacristy and Vestry]
+    ```
+    ```yaml
+    scene_number: [e.g., 3]
+    scene_title: Performing the Cleansing Ritual
+    scene_goal: |
+      Attempt to perform the ritual indicated by the inscription to reactivate the spire's defenses or unlock its secrets.
+    location:
+      - Sacristy_Vestry_Sanctuary
+    raw_adventure_text: |
+      [Raw text for Sanctuary and the ritual itself]
+    ```
+    **Reason for DO NOT DO THIS:** This wrongly splits a *single ritual and its overarching goal* into multiple scenes, despite the locations being freely accessible and contributing to one continuous objective. The *entire ritual process*, from gathering components to performance, should be **ONE SCENE** with **ONE SCENE GOAL**.
 
 ### **Indicators for a NEW Scene (Only Split When These Apply, and Only if Not a Pre-Combined Location):**
 
-* **These indicators apply primarily to individual locations that have NOT been pre-combined.** If an 'Identified Location' `name` represents a pre-combined group (like 'Sacristy_Vestry_Sanctuary_Combined'), **DO NOT** use these indicators to split that specific pre-combined group into multiple scenes, nor should you use its component names (e.g., 'Sacristy', 'Vestry') in other scenes.
+* These indicators apply primarily to individual locations that have NOT been pre-combined. If an 'Identified Location' `name` represents a pre-combined group (like 'Sacristy_Vestry_Sanctuary_Combined'), **DO NOT** use these indicators to split that specific pre-combined group into multiple scenes, nor should you use its component names (e.g., 'Sacristy', 'Vestry') in other scenes.
 
 * **MAJOR Obstacle/Barrier:** A physical or magical block that *must* be overcome to progress.
 * **Significant Time Skip:** A clear narrative break.
@@ -91,6 +128,8 @@ scene_number: 1
 scene_title: The Temple Entry
 location:
   - Entry Hall
+scene_goal: |
+  Enter the temple.
 raw_adventure_text: |
   The entry hall is dimly lit... (Exact text from original adventure, covering Entry Hall, Sacristy, Vestry descriptions and any events within them)
   A small, dusty room adjacent to the main hall...
@@ -99,14 +138,18 @@ raw_adventure_text: |
 
 ```yaml
 scene_number: 2
-scene_title: Altar Ritual
+scene_title: The Ritual Chambers
+scene_goal: |
+  Perform the complete Ritual in the Sanctuary open the way further into the tower, including gathering all necessary components from the Sacristy and Vestry.
 location:
-  - Sacristy
-  - Vestry
-  - Sanctuary
+  - Sacristy_Vestry_Sanctuary
 raw_adventure_text: |
-  The main chamber of the temple, dominated by a large, cracked altar... (Exact text for Sanctuary and Main Altar)
-  The altar shows signs of recent use...
+  ### Sacristy
+  This room contains a pair of large cabinets and a long table...
+  ### Vestry
+  This room holds two brass-bound chests...
+  ### Sanctuary
+  This wide room contains a holy water font... (Exact text for all three combined locations and any ritual instructions from the original adventure)
 ```
 
 Repeat this block for each grouped scene. Ensure `raw_adventure_text` is accurate and complete for the locations in that scene.
