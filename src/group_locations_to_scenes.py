@@ -6,6 +6,7 @@ import yaml
 import textwrap
 import re
 from typing import List, Dict, Any
+from src.lore_utils import get_lore_markdown
 
 def prompt_path(pdf_path: str):
     path = Path(pdf_path)
@@ -154,8 +155,8 @@ def run(pdf_path: str, dry_run: bool = False):
     env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template("group_scenes_prompt.md.j2")
 
-    lore_file = f"work/extract_lore_{adventure_name}_prompt.response.md"
-    lore = Path(lore_file).read_text(encoding="utf-8")
+    lore_file = Path(f"work/extract_lore_{adventure_name}_prompt.response.md")
+    lore = get_lore_markdown(lore_file)
 
     prompt = template.render(
         lore=lore,

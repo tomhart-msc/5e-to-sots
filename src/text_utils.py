@@ -6,8 +6,10 @@ import re
 
 def strip_code_blocks(filename: str):
     """
-    Removes lines starting with "```" from the input file and
-    saves the result back to the same filename.
+    Removes lines containing "```" from the input file and
+    saves the result back to the same filename. This version is
+    more resilient to extra characters (like colons or spaces)
+    before the code block markers.
 
     Args:
         filename (str): The path to the file to be processed.
@@ -16,7 +18,8 @@ def strip_code_blocks(filename: str):
         with open(filename, 'r') as f_read:
             lines = f_read.readlines()
 
-        filtered_lines = [line for line in lines if not line.strip().startswith("```")]
+        # Check if the stripped line contains '```' anywhere
+        filtered_lines = [line for line in lines if "```" not in line.strip()]
 
         with open(filename, 'w') as f_write:
             f_write.writelines(filtered_lines)

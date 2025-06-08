@@ -15,6 +15,8 @@ client = OpenAI(base_url=OPENROUTER_BASE_URL, api_key=OPENROUTER_API_KEY)
 WORK_DIR = Path("work")
 WORK_DIR.mkdir(exist_ok=True)
 
+MODEL="google/gemma-3-27b-it:free"
+
 def extract_yaml_from_markdown(md_string: str) -> Optional[str]:
     """Extracts the first YAML block from a Markdown string."""
     match = re.search(r"```yaml\s*\n(.*?)\n```", md_string, re.DOTALL)
@@ -73,11 +75,11 @@ def send_prompt_to_openrouter(prompt_md: str, prompt_name: str, dry_run: bool = 
         print(f"[dry-run] Prompt saved to {prompt_path}", file=sys.stderr)
         return None
 
-    print(f"⏳ Sending request to OpenRouter Gemini model...", file=sys.stderr)
+    print(f"⏳ Sending request to OpenRouter {MODEL} model...", file=sys.stderr)
 
     try:
         completion = client.chat.completions.create(
-            model="google/gemma-3-27b-it:free",
+            model=MODEL,
             messages=[
                 {"role": "user", "content": prompt_md}
             ],

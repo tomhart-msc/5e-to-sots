@@ -154,3 +154,109 @@ A sanctified altar now weeping mercury because it was used in a blood-ritual is.
 - Include optional General ability challenges (with TNs) when tension or risk matters.
 - Clues should often introduce faction ties, ancient history, or secrets worth killing for.
 
+## 7. 🌀 Maneuvers
+
+Maneuvers are special combat actions that create tactical or narrative advantages. They are distinct from direct attacks (Warfare, Sorcery, Sway) and do not deal Health or Morale damage.
+
+- Resolved with a General Ability test (usually **TN 4–6**).
+- Do **not** apply a damage modifier.
+- Use to **change the battlefield**, control enemies, or open new options.
+
+### Common Maneuvers
+
+| Maneuver         | Typical Ability | Description |
+|------------------|------------------|-------------|
+| **Daze**         | Sway, Tactics     | Temporarily stuns or distracts an enemy. |
+| **Disarm**       | Warfare, Athletics | Knocks a weapon or item free. |
+| **Grapple**      | Athletics         | Restrains or pins a foe. |
+| **Trip/Knockdown** | Athletics       | Knocks an enemy off balance. |
+| **Shove**        | Athletics         | Pushes an enemy physically. |
+| **Feint**        | Warfare, Sway     | Tricks a foe into reacting to a false threat. |
+| **Bluff**        | Sway              | Provokes fear, hesitation, or retreat. |
+| **Expose Weakness** | Warfare, Vigilance | Reveals a tactical or emotional flaw. |
+
+### Guidelines for Writers
+
+- Always include:
+  - The ability used (e.g., Athletics)
+  - The TN (e.g., TN 5)
+  - The effect of success (e.g., "target is knocked prone") and failure (e.g., "the attacker overextends")
+- Use in place of brute-force combat to reflect cunning and control.
+
+---
+
+## 8. ⚠️ Traps
+
+Traps are dramatic environmental dangers that tie into story and theme. They must be detectable, interpretable, and often narratively meaningful.
+
+- Traps are not random: clues should exist to **warn players**.
+- Investigative Abilities like *Felonious Intent*, *Spot Frailty*, or *Forgotten Lore* can reveal or interpret them.
+- General Abilities like *Burglary*, *Athletics*, or *Tactics* are used to bypass or disable them.
+
+### Trap Template
+
+| Field | Description |
+|-------|-------------|
+| **Detection Clue** | What reveals the trap (e.g., "Vigilance: A scuff mark on the tiles hints at movement.") |
+| **Disarm Ability** | General Ability and TN (e.g., Burglary TN 5) |
+| **Triggered Effect** | Health or Morale damage, corruption effects, imprisonment, etc. |
+| **Narrative Clue** | Optional: origin, symbolic meaning, or faction connection. |
+
+### Trap Design Principles
+
+- Traps should **reward attention to detail**.
+- Magical traps often have a **signature**, especially if tied to a Sphere.
+- Traps can provoke investigation, fear, or lateral thinking — not just damage.
+
+### Example Traps
+
+#### **Glyph of Unwelcome Memory**
+- **Detection**: Forgotten Lore — The dust forms unnatural glyphs of the old Serpentine Empire.
+- **Disarm**: Sorcery (Memory) TN 6
+- **Effect if Triggered**: A pulse of magical dread. All who see it suffer 2 Morale damage and forget the last 10 minutes.
+- **Narrative Hook**: These glyphs were favored by the Coil of Memory to erase witnesses.
+
+---
+
+#### **Flesh-Cutter Thread**
+- **Detection**: Vigilance — A faint shimmer across the threshold.
+- **Disarm**: Burglary TN 5
+- **Effect if Triggered**: Razorwire snaps free, dealing 2 Health damage to the first person through.
+- **Narrative Hook**: A signature of the Vontavni death cults. Usually rigged in pairs.
+
+---
+
+#### **Collapsing Statue Mechanism**
+- **Detection**: Spot Frailty — The base of a marble statue has cracked from underneath.
+- **Disarm**: Tactics TN 4
+- **Effect if Triggered**: The statue falls (or explodes), dealing 1 Health and pinning a Hero until freed.
+- **Narrative Hook**: Common in Denari temples repurposed by heretics.
+
+---
+
+## 9. 🧩 Core vs Optional Leads
+
+In Swords of the Serpentine, clues discovered with Investigative abilities are either **Core Leads** or **Optional Leads**.
+
+### Core Leads
+- **Must be found** to move the adventure forward.
+- They advance the plot, connect scenes, or reveal critical information.
+- Core Leads are **automatically discovered** if the relevant Investigative ability is used in the right place.
+- They are **never gated** behind die rolls.
+
+> 🛠 Example: Forgotten Lore (Core Lead) – "The ancient sigil carved into the well reveals this tomb belonged to a heretical priest exiled from Eversink. This connects to Scene 4, where his surviving cult gathers."
+
+### Optional Leads
+- Offer **useful but non-essential** information.
+- Provide tactical advantages, foreshadowing, treasure, or deeper lore.
+- Help players feel rewarded for thorough investigation.
+- May add **layers of understanding**, emotional weight, or misdirection.
+
+> 🛠 Example: Vigilance (Optional Lead) – "A small statue of Denari is tucked into a hidden wall niche. Scratched into the base is a phrase also used by the merchant in Scene 2."
+
+### Writing Guidance
+- Every scene should include:
+  - At least **one Core Lead**
+  - Several **Optional Leads** (2–4 is typical)
+- Always state which Investigative ability uncovers each clue.
+- Clues should feel **interpretive**, not just expository — they give **pieces** of the puzzle, not full answers.

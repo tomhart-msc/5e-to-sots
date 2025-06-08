@@ -7,6 +7,7 @@ from src.convert_adversaries import response_path as convert_adversaries_respons
 from src.convert_magic_items_to_sorcerous_gear import response_path as convert_gear_path
 from src.text_utils import extract_markdown_section
 from src.yaml_utils import quote_colon_strings
+from src.lore_utils import get_lore_markdown
 
 def extract_scene_goal(data) -> str:
     """
@@ -53,13 +54,13 @@ def run(scene_path: str, pdf_path: str, adventure_outline_path: str, notes_path:
     
     adventure_name = pdf_file.stem
     adventure_notes_file = Path(f"notes/{adventure_name}_adventure_notes.md")
-    lore_file = f"work/extract_lore_{adventure_name}_prompt.response.md"
+    lore_file = Path(f"work/extract_lore_{adventure_name}_prompt.response.md")
     scene_data = load_yaml(scene_file)
     scene_goal = extract_scene_goal(scene_data)
     adventure_gm_notes = load_notes_md(adventure_notes_file) if adventure_notes_file.exists() else {}
     gm_notes = load_notes_md(notes_file) if notes_file and notes_file.exists() else {}
     adventure_outline = Path(adventure_outline_path).read_text(encoding="utf-8")
-    lore = Path(lore_file).read_text(encoding="utf-8")
+    lore = get_lore_markdown(lore_file)
 
     # Load shared references
     rules_reference = Path("data/rules_reference.md").read_text(encoding="utf-8")

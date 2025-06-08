@@ -7,7 +7,6 @@ from src import convert_scene
 from src import convert_adventure
 from src import summarize_adventure
 from src import clean_up_draft
-from src import revise_adversaries
 from src import extract_lore
 from src import create_introduction
 from src import create_conclusion
@@ -70,11 +69,6 @@ def main():
     clean_up_draft_parser.add_argument("--adventure-outline", required=True, help="Path to the adventure outline markdown file.")
     clean_up_draft_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
 
-    revise_adversaries_parser = subparsers.add_parser("revise-adversaries", help="Cleans up the adversaries")
-    revise_adversaries_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
-    revise_adversaries_parser.add_argument("--draft", required=True, help="Path to the combined draft markdown file.")
-    revise_adversaries_parser.add_argument("--dry-run", action="store_true", help="Generate prompt but do not call LLM.")
-
     create_introduction_parser = subparsers.add_parser("create-introduction", help="Writes an introduction for the adventure")
     create_introduction_parser.add_argument("--pdf", required=True, help="Path to original PDF") # Changed to take PDF directly
     create_introduction_parser.add_argument("--draft", required=True, help="Path to the combined draft markdown file.")
@@ -124,9 +118,6 @@ def main():
         summarize_adventure.run(pdf_path=args.pdf, dry_run=dry_run) # Updated to pass pdf_path
     elif args.command == "clean-up-draft":
         clean_up_draft.run(args.draft, args.adventure_outline, args.dry_run)
-    elif args.command == "revise-adversaries":
-        dry_run = args.dry_run
-        revise_adversaries.run(args.pdf, args.draft, dry_run=dry_run)
     elif args.command == "create-introduction":
         dry_run = args.dry_run
         create_introduction.run(args.pdf, args.draft, dry_run=dry_run)

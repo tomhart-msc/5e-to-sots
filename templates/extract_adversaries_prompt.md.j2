@@ -1,11 +1,11 @@
 ## 🎯 Task: Extract Named NPCs, Adversaries, and Encountered Creatures
 
-You are analyzing an adventure module to extract **distinct adversaries, NPCs, and monster types**. Everything after the line "!!!!! BEGIN ADVENTURE CONTENT !!!!!" is the adventure text.
+You are analyzing an adventure module to extract **distinct named entities, adversaries, NPCs, and monster types** that play a significant role in the adventure's lore or narrative. Everything after the line "!!!!! BEGIN ADVENTURE CONTENT !!!!!" is the adventure text.
 
-Your objective is to return a YAML list of **all explicitly mentioned** named characters, creature types, and enemy groups that:
-- Play a narrative or mechanical role in the adventure (e.g., interact with the PCs, serve as enemies or allies, or appear in encounters).
-- Are described with names, types, or roles.
-- Appear in a stat block, room description, or encounter text.
+Your objective is to return a YAML list of **all explicitly mentioned** named entities that:
+- Play a significant narrative or mechanical role in the adventure (e.g., interact with the PCs, serve as enemies or allies, appear in encounters, or are important historical/lore figures, even if static).
+- Are described with names, types, or roles, or are referred to as named historical/lore elements.
+- Appear in a stat block, room description, encounter text, or historical/lore sections.
 
 ⚠️ **Do not invent entities**. Only extract those that are **explicitly described or referenced**.
 
@@ -13,6 +13,7 @@ Your objective is to return a YAML list of **all explicitly mentioned** named ch
 - Named characters (e.g., "Ramag", "Heknusret the Temerarious").
 - Clearly labeled groups or factions (e.g., "Coil of Memory assassins").
 - Distinct creature types, especially if described or given stats (e.g., "baboons", "gilded apostate").
+- **Named static lore elements or historical figures (e.g., statues of saints, ancient monarchs, legendary heroes, named artifacts).**
 - Any named creature or monster from a stat block or sourcebook reference (e.g., "chort devil (Tome of Beasts, p. 104)").
 
 ### ❌ Do *not* include:

@@ -50,6 +50,11 @@ def main():
         return 1
     adventure_name = input_pdf.stem
 
+    extract_adversaries_md = response_funcs["extract_adversaries"](adventure_name)
+    if not extract_adversaries_md.exists():
+        run_cmd(["./convert.py", "extract-adversaries", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
+        ensure_exists(extract_adversaries_md)
+
     lore_md = response_funcs["extract_lore"](input_pdf)
     if not lore_md.exists():
         run_cmd(["./convert.py", "extract-lore", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
@@ -76,11 +81,6 @@ def main():
         print(f"Error: {summary_md} not found.")
         return 1
     
-    extract_adversaries_md = response_funcs["extract_adversaries"](adventure_name)
-    if not extract_adversaries_md.exists():
-        run_cmd(["./convert.py", "extract-adversaries", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))
-        ensure_exists(extract_adversaries_md)
-
     convert_adversaries_md = response_funcs["convert_adversaries"](adventure_name)
     if not convert_adversaries_md.exists():
         run_cmd(["./convert.py", "convert-adversaries", "--pdf", str(input_pdf)] + (["--dry-run"] if args.dry_run else []))

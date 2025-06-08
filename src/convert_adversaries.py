@@ -4,6 +4,7 @@ from src.notes import load_notes_md
 from src.llm_utils import send_prompt_to_openrouter
 from src.extract_adversaries import response_path as extract_adversaries_response_path
 from src.text_utils import extract_pdf_text, strip_code_blocks, extract_markdown_section
+from src.lore_utils import get_adversary_renaming_table_markdown, get_lore_markdown
 
 STEP_NAME="convert_adversaries"
 
@@ -52,8 +53,11 @@ def run(pdf: str, dry_run: bool = False):
         print(f"Error: Missing reference file. {e}")
         return None
 
-    lore_file = f"work/extract_lore_{adventure_name}_prompt.response.md"
-    lore = Path(lore_file).read_text(encoding="utf-8")
+    lore_file = Path(f"work/extract_lore_{adventure_name}_prompt.response.md")
+    lore = get_lore_markdown(lore_file)
+
+    # Get the formatted Markdown table for renamed adversaries
+    renamed_adversaries_table = get_adversary_renaming_table_markdown(lore_file)
 
     adventure_notes_file = Path(f"notes/{adventure_name}_adventure_notes.md")
     adventure_gm_notes = load_notes_md(adventure_notes_file) if adventure_notes_file.exists() else {}
@@ -62,6 +66,7 @@ def run(pdf: str, dry_run: bool = False):
     env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template(f"{STEP_NAME}_prompt.md.j2")
     prompt_content = template.render(
+        renamed_adversaries_table=renamed_adversaries_table,
         adventure_gm_notes=adventure_gm_notes,
         lore=lore,
         system_reference=system_reference,

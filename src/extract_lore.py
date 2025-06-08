@@ -5,6 +5,8 @@ import textwrap
 from jinja2 import Environment, FileSystemLoader
 from src.llm_utils import send_prompt_to_openrouter
 from src.notes import load_notes_md
+from src.extract_adversaries import response_path as extract_adversaries_response_path
+from src.text_utils import strip_code_blocks
 
 def prompt_path(pdf_path: str):
     path = Path(pdf_path)
@@ -51,10 +53,14 @@ def run(pdf_path, dry_run: bool = False):
         adventure_text_chunks.append(textwrap.indent(chunk.strip(), "    "))
     adventure_text = "\n\n".join(adventure_text_chunks)
 
+    adversaries_yaml_path = extract_adversaries_response_path(adventure_name)
+    adversaries_yaml = Path(adversaries_yaml_path).read_text(encoding="utf-8")
+
     # Render Jinja2 template
     env = Environment(loader=FileSystemLoader("templates"))
     template = env.get_template("extract_lore_prompt.md.j2")
     prompt = template.render(
+        adversaries=adversaries_yaml,
         adventure_gm_notes=adventure_gm_notes,
         adventure_text=adventure_text,
         world_reference=world_reference,
@@ -63,4 +69,5 @@ def run(pdf_path, dry_run: bool = False):
 
     # Use the LLM helper to save prompt and optionally call OpenRouter
     send_prompt_to_openrouter(prompt_md=prompt, prompt_name=prompt_path(pdf_path), dry_run=dry_run)
+    strip_code_blocks(response_path(adventure_name))
 
