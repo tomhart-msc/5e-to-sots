@@ -4,6 +4,7 @@ import sys
 from openai import OpenAI 
 import dotenv
 import re
+import time
 from typing import Optional, List
 
 dotenv.load_dotenv()
@@ -14,6 +15,11 @@ client = OpenAI(base_url=OPENROUTER_BASE_URL, api_key=OPENROUTER_API_KEY)
 
 WORK_DIR = Path("work")
 WORK_DIR.mkdir(exist_ok=True)
+
+# Configuration for retries
+MAX_RETRIES = 5
+INITIAL_BACKOFF_SECONDS = 2
+BACKOFF_MULTIPLIER = 2
 
 MODEL="google/gemma-3-27b-it:free"
 
@@ -75,26 +81,46 @@ def send_prompt_to_openrouter(prompt_md: str, prompt_name: str, dry_run: bool = 
         print(f"[dry-run] Prompt saved to {prompt_path}", file=sys.stderr)
         return None
 
-    print(f"⏳ Sending request to OpenRouter {MODEL} model...", file=sys.stderr)
+    retries = 0
+    backoff_time = INITIAL_BACKOFF_SECONDS
 
-    try:
-        completion = client.chat.completions.create(
-            model=MODEL,
-            messages=[
-                {"role": "user", "content": prompt_md}
-            ],
-            # you can add extra_headers or extra_body if you want
-        )
-        response_text = completion.choices[0].message.content.strip()
+    while retries < MAX_RETRIES:
+        print(f"⏳ Sending request to OpenRouter {MODEL} model...", file=sys.stderr)
+        try:
+            completion = client.chat.completions.create(
+                model=MODEL,
+                  messages=[
+                    {"role": "user", "content": prompt_md}
+                ],
+                 # you can add extra_headers or extra_body if you want
+            )
 
-        with open(response_path, "w", encoding="utf-8") as f:
-            f.write(response_text)
 
-        print(response_text)  # to stdout
-        print(f"\n[response saved to {response_path}]", file=sys.stderr)
+            # Check if choices is not None and not empty
+            if completion.choices is None or not completion.choices:
+                raise ValueError("LLM response 'choices' was None or empty.")
 
-        return response_text
+            response_text = completion.choices[0].message.content.strip()
 
-    except Exception as e:
-        print(f"❌ Error calling OpenRouter API: {e}", file=sys.stderr)
-        return None
+            with open(response_path, "w", encoding="utf-8") as f:
+                f.write(response_text)
+
+            print(response_text)  # to stdout
+            print(f"\n[response saved to {response_path}]", file=sys.stderr)
+
+            return response_text
+
+        except (ValueError, TypeError) as e:
+            # Handle cases where choices is None, empty, or content is missing/malformed
+            print(f"❌ Error processing LLM response: {e}", file=sys.stderr)
+            retries += 1
+            if retries < MAX_RETRIES:
+                print(f"Retrying in {backoff_time} seconds...", file=sys.stderr)
+                time.sleep(backoff_time)
+                backoff_time *= BACKOFF_MULTIPLIER
+            else:
+                print(f"❌ Max retries ({MAX_RETRIES}) exceeded. Giving up.", file=sys.stderr)
+                raise
+        except Exception as e:
+            print(f"❌ Error calling OpenRouter API: {e}", file=sys.stderr)
+            raise
