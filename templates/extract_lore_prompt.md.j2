@@ -2,6 +2,34 @@ You are a rules expert and dramaturge helping to adapt a D&D 5E adventure to the
 
 ---
 
+**CRITICAL RULE: ABSOLUTE EXCLUSION OF FORBIDDEN TERMS**
+
+Throughout your entire output, you **MUST NOT** use any of the following terms or directly analogous concepts in their original heroic fantasy context:
+* **"elves"**
+* **"dwarves"**
+* **"goblins"**
+* **"orcs"**
+* **"titans"**
+* **"giants"**
+* **"ogres"**
+* **"half-orcs"**
+* **"halflings"**
+* **"dragonborn"**
+* **"tieflings"**
+* **"gnomes"**
+* **"elementals"** (unless specifically re-skinned as raw, corrupting magical forces or unbound spirits)
+* **"celestials"**
+* **"devils"** (re-skin as demons)
+* **"fiends"** (re-skin as demons)
+* **"psionics"** (unless re-skinned as subtle, corrupting mental sorcery)
+* **"D&D alignments"** (e.g., Lawful Good, Chaotic Evil)
+* **"planar cosmology"** (e.g., Material Plane, Ethereal Plane, Nine Hells, Abyss, Shadowfell, Astral Plane, Feywild). References to spirit worlds or dream realms are acceptable as per SotS lore, but never using D&D specific planar terms.
+* **"fey"**: This term and its associated concepts (e.g., Faerie, Seelie/Unseelie courts) are **STRICTLY FORBIDDEN**. They are incompatible with the grim, morally ambiguous, and human-centric tone of *Swords of the Serpentine*. Any elements resembling fey MUST be re-skinned as humans.
+
+If an original D&D element falls under this absolute exclusion, you **MUST** re-skin it using *Swords of the Serpentine* terminology and concepts or omit it if no suitable re-skin exists. This rule takes precedence over all other instructions.
+
+---
+
 {{ setting_reference }}
 
 ---
@@ -26,6 +54,8 @@ This adventure is located in: {{ adventure_gm_notes.location }}
 
 Carefully review the "Notes" section of the GM Intent below. This section provides critical context for the adventure's lore and may contain **specific guidance on character origins or affiliations that imply unique naming conventions.** While the `Default Culture` setting provides the primary naming guidance for this adventure, look for details here that might suggest a different cultural origin for **specific individuals or groups within the adventure.**
 
+{{ adventure_gm_notes.notes }}
+
 ---
 {%- endif %}
 
@@ -35,13 +65,23 @@ These specific rules govern the generation of new names for NPCs and adversaries
 
 When generating `sots_name` for characters and entities in the `renaming_table`, strictly adhere to the following priority order and guidelines:
 
+**0. Conditional Retention of Original Names:**
+* **sots_name generation strategy:**
+    * **DEFAULT ACTION: RETAIN `original_name`.** For each entry, **IF** the `original_name` meets the criteria for retention (detailed below), then **the `sots_name` MUST be identical to the `original_name`**.
+    * **ONLY RENAME IF ABSOLUTELY NECESSARY:** You **MUST ONLY** generate a new `sots_name` if and only if the `original_name` falls into one of the following, strictly defined categories:
+        1.  It is a term on the **CRITICAL RULE: ABSOLUTE EXCLUSION OF FORBIDDEN TERMS** list (e.g., "elf," "dwarf," "fey," "trollkin").
+        2.  It is overtly "heroic fantasy" or explicitly tied to a forbidden D&D concept (e.g., "Sir Glorious, Paladin of Light," "Beholder Eye Tyrant," or names that clearly imply specific D&D races like "Thornbeard" for a dwarf, even if not explicitly on the forbidden list).
+        3.  Its phonetic qualities, cultural sound, and overall feel *demonstrably do not align at all* with the designated region of the `Adventure Setting` (e.g., a clearly Japanese-sounding name for an Erebos character; a clearly Roman-sounding name for a Vontavni character).
+    * **For all other `original_name` entries that do NOT fall into any of the three categories above, you MUST RETAIN the `original_name` as the `sots_name`.**
+    * **When renaming is necessary,** the new `sots_name` **MUST** strictly adhere to the relevant naming conventions (e.g., for Erebos: Arab, Indian, or African-sounding, including "faux fantasy" names with these qualities).
+
 1.  **Primary Naming Convention for This Adventure: Based on Default Culture.**
     {%- if adventure_gm_notes.default_culture %}
     * **For all new NPCs and adversaries in this adventure, the default naming convention is {{ adventure_gm_notes.default_culture.strip() }}.** This applies unless a more specific override (as per point 2) is clearly indicated.
     * **Crucially, if the `Default Culture` in the GM notes is intended to signify "older" or "ancient" origins for characters (as implied by adventure context), apply this {{ adventure_gm_notes.default_culture.strip() }} naming convention to all characters associated with such ancient origins or historical elements. When this applies, names MUST be *exclusively* from the designated Default Culture, without any mixing or blending of elements from other regional naming conventions (e.g., Roman, Italian, Greek). Ensure names are culturally cohesive and authentic to the Default Culture.**
     * **Therefore, if a `Default Culture` is provided and applies to the characters, the "General Regional Naming Conventions" below are *not* to be used for character naming in this `renaming_table`.**
     {%- else %}
-    * No specific default culture is set for this adventure. For naming, draw upon the cultural implications of the `Adventure Setting` and `world_reference` to ensure names are cohesive with the immediate geographic context.
+    * No specific default culture is set for this adventure, therefore the default naming convention for new NPCs and adversaries in this `renaming_table` **MUST** be derived directly from the `Adventure Setting` ({{ adventure_gm_notes.location.strip() if adventure_gm_notes.location else "the primary location of the adventure" }}), by strictly adhering to the corresponding **"General Regional Naming Conventions"** listed below (e.g., Erebos names: Arab, Indian, or African). Ensure names are culturally cohesive with this immediate geographic context.
     {%- endif %}
 
 2.  **Specific Overrides: Derived from GM Intent.**
@@ -76,14 +116,15 @@ For each character (adversary or NPC) identified in the `raw_adversaries_data` p
 
 ### Lore Content & Formatting Directives:
 -   **Output Format:** The `converted_lore` should be formatted as **clear, readable Markdown**, utilizing **descriptive headers and bullet points** to organize information.
--   **Names:** You **MUST** always use the converted names in the output. For example, if you rename "Heimdall Stoneforger" to "Ernesto Letteri", always write "Ernesto Letteri" instead of "Heimdall Stoneforger."
+-   **Names:** You **MUST** always use the converted names from the `renaming_table` in the output. For example, if you rename "Heimdall Stoneforger" to "Ernesto Letteri", always write "Ernesto Letteri" instead of "Heimdall Stoneforger."
 -   **Comprehensive Detail:** Ensure the lore is rich and comprehensive, providing a high level of narrative detail for each category, similar to the level of depth typically found in published adventure backgrounds.
--   **Key Historical Events & Eras:** Identify significant past events (e.g., the fall of empires, ancient catastrophes, origins of significant magical phenomena) and adapt them to emphasize themes of decay, lost glory, or lingering dangers in the S&S context, *as informed by the world reference*.
--   **Important Factions & Their Motivations:** Describe major organizations, societies, or groups. Reinterpret their goals, methods, and power dynamics to align with S&S themes (e.g., ruthless ambition, shadowy conspiracies, desperate clinging to power, hidden agendas), *integrating them with existing S&S factions or creating new ones consistent with the provided lore*.
--   **Significant Entities & Concepts:** Detail any powerful beings (e.g., deities, monstrous creatures, ancient entities like Titans) or abstract concepts (e.g., magical networks, ancient artifacts like the Serpentine Codex, curses, plagues). Adapt their nature and influence to be more mysterious, dangerous, or morally complex in the S&S genre, *fitting them into the S&S cosmology presented in the references*.
--   **Crucial Locations & Their Significance:** Beyond simple scene settings, describe important cities, regions, landmarks, or ruins, focusing on their historical weight, inherent dangers, and how they embody the S&S aesthetic (e.g., crumbling grandeur, desolate wilderness, centers of vice or hidden power). **When re-contextualizing locations, draw heavily from the continental world reference to choose the most appropriate S&S region and integrate specific details from that region.**
--   **Overarching Thematic Elements:** Identify and explicitly emphasize recurring themes present in the D&D adventure (e.g., lost knowledge, corrupting magic, ancient evils, societal decay, desperate struggles) and highlight how they can be amplified for a Swords & Sorcery narrative, *in line with the tone established in the provided setting information*.
--   **Transformation of Heroic Fantasy Elements:** Specifically note elements that might lean too heavily into heroic fantasy (e.g., clear-cut good vs. evil, overt divine intervention, readily available high magic, **D&D-specific creature types like fey, celestials, generic devils/demons, overt planar cosmology, and clear-cut alignments**). Suggest how they can be **re-skinned, re-contextualized, or outright replaced** to fit the S&S tone (e.g., moral ambiguity, ancient and dangerous magic, self-serving gods, reliance on cunning over heroism). **Focus on re-interpreting such elements as ancient horrors, corrupting influences, morally ambiguous entities, or aspects of the physical world warped by ancient magic, rather than maintaining their D&D heroic fantasy connotations.** *Ensure consistency with the S&S genre as presented in the reference materials*.
+-   **Consistency with `sots_conversion_map`:** ALL elements of the `converted_lore` MUST rigorously adhere to the mappings defined in the `sots_conversion_map`. This includes creature types, magical concepts, cosmological elements, and thematic interpretations. You are actively *performing* the re-skinning throughout the text based on this map.
+
+-   **Key Historical Events & Eras:** Identify significant past events (e.g., the fall of empires, ancient catastrophes, origins of significant magical phenomena). Describe these events as they exist *within the Swords of the Serpentine setting*, using only SotS-appropriate names, concepts, and tone. **Ensure all heroic fantasy elements in historical accounts are fully re-skinned according to the `sots_conversion_map` and the absolute exclusion list.**
+-   **Important Factions & Their Motivations:** Describe major organizations, societies, or groups. Present their goals, methods, and power dynamics entirely within the *Swords of the Serpentine* context (e.g., ruthless ambition, shadowy conspiracies, desperate clinging to power, hidden agendas). **All descriptions of members, allies, or concepts related to these factions MUST be fully re-skinned based on the `sots_conversion_map`.** Integrate them with existing SotS factions or create new ones consistent with the provided lore.
+-   **Significant Entities & Concepts:** Detail any powerful beings (e.g., deities, monstrosities) or abstract concepts (e.g., magical networks, ancient artifacts, curses, plagues). Describe their nature and influence as they exist *within the Swords of the Serpentine cosmology*, ensuring they are mysterious, dangerous, or morally complex. **All descriptions of these entities and concepts MUST be fully re-skinned according to the `sots_conversion_map` and the absolute exclusion list.**
+-   **Crucial Locations & Their Significance:** Beyond simple scene settings, describe important cities, regions, landmarks, or ruins, focusing on their historical weight, inherent dangers, and how they embody the S&S aesthetic (e.g., crumbling grandeur, desolate wilderness, centers of vice or hidden power). **All descriptions of locations, their inhabitants, or related entities MUST be fully re-skinned according to the `sots_conversion_map`.** When re-contextualizing locations, draw heavily from the continental world reference to choose the most appropriate S&S region and integrate specific details from that region.
+-   **Overarching Thematic Elements:** Identify and explicitly emphasize recurring themes present in the D&D adventure (e.g., lost knowledge, corrupting magic, ancient evils, societal decay, desperate struggles). Detail how these themes manifest *within the Swords of the Serpentine narrative*, in line with the tone established in the provided setting information.
 -   **Conciseness:** Keep the output concise and focused on actionable lore that supports adventure design.
 
 This adapted lore and renaming table will serve as foundational context for all subsequent conversion steps, ensuring thematic and naming consistency.
@@ -96,53 +137,77 @@ This adapted lore and renaming table will serve as foundational context for all 
 
 **IMPORTANT:** Within the `converted_lore` section, you **MUST** use only the `sots_name` for all characters and entities. **Do NOT include any `original_name` from the `renaming_table` in the `converted_lore` text.**
 
+**CRITICAL:** No heroic fantasy elements (goblins, trollkin, etc.) may appear in the `converted_lore`.
+
 Return a single YAML block with the following top-level keys:
 
 ```yaml
+sots_conversion_map: |
+  ## Swords of the Serpentine Conversion Map
+
+  This section provides a clear, explicit mapping of original D&D/heroic fantasy concepts to their *Swords of the Serpentine* equivalents. This map MUST be generated FIRST and then used as a strict reference for all subsequent `converted_lore` generation.
+
+  **I. Creature & Race Conversions:**
+  * **[Original D&D/Fantasy Race/Creature (e.g., "elves")]:** [SotS Equivalent (e.g., "ancient, withered human cultists" or "spirits of forgotten places"). Include a brief description of their SotS nature.]
+  * **[Original D&D/Fantasy Race/Creature (e.g., "trollkin")]:** [SotS Equivalent (e.g., "corrupted tribal humans," "feral beings," or "Night Stalkers (if a specific group name)"). Include a brief description of their SotS nature and connection to SotS lore.]
+  # ... (Include all relevant creature/race conversions identified in the adventure text)
+
+  **II. Magic & Cosmology Conversions:**
+  * **[Original D&D/Fantasy Magic/Cosmology Concept (e.g., "divine magic")]:** [SotS Equivalent (e.g., "ancient, corrupting sorcery tied to forgotten gods" or "subtle influence of distant gods").]
+  * **[Original D&D/Fantasy Magic/Cosmology Concept (e.g., "planar travel")]:** [SotS Equivalent (e.g., "perilous journeys into the spirit world" or "magical rituals that twist reality").]
+  # ... (Include all relevant magic/cosmology conversions)
+
+  **III. Other Heroic Fantasy Element Conversions:**
+  * **[Original D&D/Fantasy Concept (e.g., "good vs. evil alignment")]:** [SotS Equivalent (e.g., "moral ambiguity and competing self-interests").]
+  * **[Original D&D/Fantasy Concept (e.g., "feywild")]:** [SotS Equivalent (e.g., "a perilous, unseen spirit realm connected to nature" or "twisted, forgotten groves").]
+  # ... (Include all other relevant heroic fantasy element conversions)
+renaming_table:
+  - original_name: [Original D&D Name 1]
+    sots_name: [Retained original D&D Name 1 if appropriate, or else Invented SotS Name 1]
+    level: [non-combatant, mook, standard, major, or boss]
+  - original_name: [Original D&D Name 2]
+    sots_name: [Retained original D&D Name 2 if appropriate, or else Invented SotS Name 2]
+    level: [non-combatant, mook, standard, major, or boss]
+  # Example with retained appropriate name
+  - original_name: Yishjarat
+    sots_name: Yishjarat
+    level: non-combatant
+  # Example with inappropriate name renamed
+  - original_name: Haljar Hammerfury
+    sots_name: Benvenuto Capasso
+    level: non-combatant
+  # ... continue for all characters provided in raw_adversaries_data
 converted_lore: |
   ## Adventure Background: [Adventure Title] - Adapted for Swords of the Serpentine
 
-  **Adventure Setting:** [Brief description of the setting's location within SotS world, integrating `adventure_gm_notes.location` if provided.]
+  **Adventure Setting:** [Concise description of the adventure's location within the *Swords of the Serpentine* world. Integrate `adventure_gm_notes.location` if provided, ensuring all place names are SotS-appropriate.]
 
   **Core Thematic Elements:**
-  * [Bullet point for Theme 1: detailed explanation of how it's present and adapted for SotS]
-  * [Bullet point for Theme 2: detailed explanation]
-  * [Bullet point for Theme 3: detailed explanation]
-  # ... (include all relevant core themes identified in the adventure, aiming for comprehensive coverage)
+  * [Bullet point for Theme 1: detailed explanation of how this theme is woven into the lore, consistently using SotS concepts and tone.]
+  * [Bullet point for Theme 2: detailed explanation, using SotS-specific terminology.]
+  * [Bullet point for Theme 3: detailed explanation, entirely within the SotS narrative.]
+  # ... (include all relevant core themes identified in the adventure, aiming for comprehensive coverage in SotS terms)
 
   ## I. Historical Eras & Events
-  * **[Named Era/Event 1]:** [Detailed description of the event, its significance within the adventure, and how it is re-contextualized for the SotS setting. Use full, descriptive paragraphs as needed for each event.]
-  * **[Named Era/Event 2]:** [Detailed description of the event, its significance, and SotS adaptation.]
-  * **[Named Era/Event 3]:** [Detailed description of the event, its significance, and SotS adaptation.]
-  # ... (include all key historical events and eras relevant to the adventure background)
+  * **[Named Era/Event 1]:** [Detailed narrative description of the event and its significance within the adventure, presented solely within the *Swords of the Serpentine* historical context. Use full, descriptive paragraphs as needed for each event. Ensure all names and concepts are SotS-appropriate.]
+  * **[Named Era/Event 2]:** [Detailed narrative description of the event and its significance, exclusively using SotS lore and terminology.]
+  * [Named Era/Event 3]: [Detailed narrative description of the event and its significance, entirely from the SotS perspective.]
+  # ... (include all key historical events and eras relevant to the adventure background, as they exist in the SotS world)
 
   ## II. Crucial Locations & Their Significance
-  * **[Location Name 1]:** [Detailed description of the location, its historical weight, inherent dangers, and how it embodies the S&S aesthetic. Integrate specific details from the `world_reference` for the chosen region.]
-  * **[Location Name 2]:** [Detailed description of location and its significance.]
-  # ... (include all crucial locations beyond simple scene settings, focusing on their lore and S&S relevance)
+  * **[Location Name 1]:** [Detailed description of the location, its historical weight, inherent dangers, and how it embodies the *Swords of the Serpentine* aesthetic (e.g., crumbling grandeur, desolate wilderness, centers of vice or hidden power). **All descriptions in this section MUST be fully re-skinned to SotS terminology and concepts, rigorously avoiding forbidden terms.** Integrate specific details from the `world_reference` for the chosen region. All descriptions must use SotS names and concepts.]
+  * **[Location Name 2]:** [Detailed description of location and its significance, **fully re-skinned and using only SotS terminology and concepts.**]
+  # ... (include all crucial locations beyond simple scene settings, focusing on their lore and *Swords of the Serpentine* relevance)
 
   ## III. Significant Entities & Concepts
-  * **[Entity/Concept Name 1]:** [Detailed description of their nature, influence, and how they are adapted to be more mysterious, dangerous, or morally complex in the S&S genre, fitting them into the S&S cosmology.]
-  * **[Entity/Concept Name 2]:** [Detailed description of entity/concept and its significance.]
-  # ... (include all significant entities or abstract concepts with detailed descriptions)
+  * **[Entity/Concept Name 1]:** [Detailed description of their nature, influence, and role within the *Swords of the Serpentine* cosmology. **All descriptions in this section MUST be fully re-skinned to SotS terminology and concepts, rigorously avoiding forbidden terms.** Ensure all descriptions are consistent with the S&S genre (e.g., mysterious, dangerous, or morally complex). All names and concepts must be SotS-appropriate.]
+  * **[Entity/Concept Name 2]:** [Detailed description of entity/concept and its significance, **fully re-skinned and using only SotS terminology and concepts.**]
+  # ... (include all significant entities or abstract concepts with detailed descriptions, as they exist in the SotS world)
 
   ## IV. Important Factions & Their Motivations
-  * **[Faction Name 1]:** [Detailed description of the faction's goals, methods, and power dynamics, aligned with S&S themes (e.g., ruthless ambition, shadowy conspiracies, desperate clinging to power, hidden agendas). Integrate with existing S&S factions or create new ones consistent with provided lore.]
-  * **[Faction Name 2]:** [Detailed description of faction and its motivations.]
-  # ... (include all important factions involved in the adventure)
-
-  ## V. Transformation of Heroic Fantasy Elements
-  * **[Element 1 (e.g., "Clear-cut good vs. evil" re-skinned as "Moral ambiguity")]:** [Explain how this element is re-interpreted for the S&S tone. Provide specific details on the transformation.]
-  * **[Element 2 (e.g., "Overt divine intervention" re-skinned as "Distant and indifferent gods")]:** [Explain how this element is re-interpreted for the S&S tone.]
-  # ... (include all relevant re-interpretations of D&D heroic fantasy elements, as outlined in the directives)
-renaming_table:
-  - original_name: [Original D&D Name 1]
-    sots_name: [Invented SotS Name 1]
-    level: [non-combatant, mook, standard, major, or boss]
-  - original_name: [Original D&D Name 2]
-    sots_name: [Invented SotS Name 2]
-    level: [non-combatant, mook, standard, major, or boss]
-  # ... continue for all characters provided in raw_adversaries_data
+  * **[Faction Name 1]:** [Detailed description of the faction's goals, methods, and power dynamics, presented entirely within the *Swords of the Serpentine* context (e.g., ruthless ambition, shadowy conspiracies, desperate clinging to power, hidden agendas). **All descriptions in this section MUST be fully re-skinned to SotS terminology and concepts, rigorously avoiding forbidden terms.** Integrate with existing SotS factions or describe new ones consistent with the provided lore. All names must be SotS-appropriate.]
+  * **[Faction Name 2]:** [Detailed description of faction and its motivations, **fully re-skinned and using only SotS terminology and concepts.**]
+  # ... (include all important factions involved in the adventure, as they exist in the SotS world)
 ```
 
 ---
