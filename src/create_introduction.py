@@ -2,7 +2,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from src.notes import load_notes_md
 from src.llm_utils import send_prompt_to_openrouter
-from src.lore_utils import get_lore_markdown
+from src.lore import get_lore_markdown
 
 STEP_NAME="create_introduction"
 
@@ -41,8 +41,7 @@ def run(pdf: str, draft: str, dry_run: bool = False):
     adventure_notes_file = Path(f"notes/{adventure_name}_adventure_notes.md")
     adventure_gm_notes = load_notes_md(adventure_notes_file) if adventure_notes_file.exists() else {}
 
-    lore_file = Path(f"work/extract_lore_{adventure_name}_prompt.response.md")
-    lore = get_lore_markdown(lore_file)
+    lore = get_lore_markdown(adventure_name)
 
     draft_content = raw_draft_content.strip()
 

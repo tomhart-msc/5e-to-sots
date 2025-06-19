@@ -4,7 +4,7 @@ from src.notes import load_notes_md
 from src.llm_utils import send_prompt_to_openrouter
 from src.extract_adversaries import response_path as extract_adversaries_response_path
 from src.text_utils import extract_pdf_text, strip_code_blocks, extract_markdown_section
-from src.lore_utils import get_adversary_renaming_table_markdown, get_lore_markdown
+from src.lore import get_adversary_renaming_table_markdown, get_lore_markdown
 
 STEP_NAME="convert_adversaries"
 
@@ -53,11 +53,10 @@ def run(pdf: str, dry_run: bool = False):
         print(f"Error: Missing reference file. {e}")
         return None
 
-    lore_file = Path(f"work/extract_lore_{adventure_name}_prompt.response.md")
-    lore = get_lore_markdown(lore_file)
+    lore = get_lore_markdown(adventure_name)
 
     # Get the formatted Markdown table for renamed adversaries
-    renamed_adversaries_table = get_adversary_renaming_table_markdown(lore_file)
+    renamed_adversaries_table = get_adversary_renaming_table_markdown(adventure_name)
 
     adventure_notes_file = Path(f"notes/{adventure_name}_adventure_notes.md")
     adventure_gm_notes = load_notes_md(adventure_notes_file) if adventure_notes_file.exists() else {}
